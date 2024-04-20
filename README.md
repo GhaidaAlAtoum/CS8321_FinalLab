@@ -5,10 +5,10 @@
 
 # Verification Dataset
 
-The dataset for verification is compiled from [LFWA+](https://liuziwei7.github.io/projects/FaceAttributes.html) 
-    * [Google Drive](https://drive.google.com/drive/folders/0B7EVK8r0v71pQ3NzdzRhVUhSams?resourcekey=0-Kpdd6Vctf-AdJYfS55VULA)
-    * Parsing of the data and pairing for verification protocol: Notebooks under [LFWA+_parsing_and_cleanup.ipynb/Pairing.ipynb](code/BuildingVerificationDataset)
-    * To Install compiled dataset: [SMU Outlook One Drive](https://smu365-my.sharepoint.com/:f:/r/personal/galatoum_smu_edu/Documents/CS8321_Final_Lab?csf=1&web=1&e=O07wxP)
+The dataset for verification is compiled from [LFWA+](https://liuziwei7.github.io/projects/FaceAttributes.html)
+  * [Google Drive](https://drive.google.com/drive/folders/0B7EVK8r0v71pQ3NzdzRhVUhSams?resourcekey=0-Kpdd6Vctf-AdJYfS55VULA)
+  * Parsing of the data and pairing for verification protocol: Notebooks under [LFWA+_parsing_and_cleanup.ipynb/Pairing.ipynb](code/BuildingVerificationDataset)
+  * ❗❗❗ To Install compiled dataset: [SMU Outlook One Drive](https://smu365-my.sharepoint.com/:f:/r/personal/galatoum_smu_edu/Documents/CS8321_Final_Lab?csf=1&web=1&e=O07wxP)❗❗❗
     
 # Training Dataset 
 
