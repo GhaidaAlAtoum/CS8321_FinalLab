@@ -1,0 +1,8 @@
+data/
+play_ground_code/
+*.h5
+.ipynb_checkpoints/
+.Trash-*/
+*.pyc
+**/__pycache__/
+
