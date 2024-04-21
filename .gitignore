@@ -5,4 +5,4 @@ play_ground_code/
 .Trash-*/
 *.pyc
 **/__pycache__/
-
+.DS_Store
