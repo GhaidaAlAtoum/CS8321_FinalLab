@@ -85,7 +85,7 @@ We will explore a neural network that’s inspired by architectural design of VG
 
 The variations we intend to study are detailed in figure 1.
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{Matrix.png}}
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/Matrix.png}}
     \caption{Test matrix of hyper-parameters.}
     \label{test_matrix}
 \end{figure}
@@ -96,14 +96,14 @@ We will compare the performance implication of using smaller kernel size (3x3) v
 
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{8_conv_layers_3x3Filters_noFlat.png}}
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/8_conv_layers_3x3Filters_noFlat.png}}
     \caption{Variation 1: Kernel size 3x3 with 8 layers.}
     \label{var1}
 \end{figure}
 
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{8_conv_layers_5x5Filters_noFlat.png}}
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/8_conv_layers_5x5Filters_noFlat.png}}
     \caption{Variation 3: Kernel size 5x5 with 8 layers.}
     \label{var2}
 \end{figure}
@@ -112,13 +112,13 @@ We will compare the performance implication of using smaller kernel size (3x3) v
 We will examine the impact of the network depth by training models with different numbers of layers, specifically 8 and 16 layers. 
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{16_conv_layers_3x3Filters_noFlat.png}}
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/16_conv_layers_3x3Filters_noFlat.png}}
     \caption{Variation 2: Kernel size 3x3 with 16 layers.}
     \label{var3}
 \end{figure}
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{16_conv_layers_5x5Filters_noFlat.png}}
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/16_conv_layers_5x5Filters_noFlat.png}}
     \caption{Variation 4: Kernel size 5x5 with 16 layers.}
     \label{var4}
 \end{figure}
@@ -152,13 +152,13 @@ Where $(TPR_{class1}^{(F)}, TPR_{class1}^{(F)})$ denote the true positive rates 
 The ROC Curve plots the True positive rate (TPR) against the False Positive rate (FPR) at various classification thresholds. The curve should help us select the optimal threshold for classification purposes. The curve also helps in visualizing the  quality of our model. 
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.9\linewidth]{VGG19.png}}
+    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG19.png}}
     \caption{VGG19 ROC and Bias Score.}
     \label{vgg19_roc}
 \end{figure}
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.9\linewidth]{VGG16.png}}
+    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG16.png}}
     \caption{VGG16 ROC and Bias Score.}
     \label{vgg16_roc}
 \end{figure}
@@ -183,7 +183,7 @@ Furthermore, monitoring accuracy can help identify if the model is over-fitting 
 We used Grad-CAM (Gradient-weighted Class Activation Mapping) heat map visualization to visualize the region of an image that are important for predictions from the last layer of CNN. This help us to understand which facial features the model is focusing on for face identification or verification. This is relevant for our analysis of bias as it can reveal if the model is relying on features that are not evenly distributed across different demographic(racial) groups, potentially leading to bias prediction.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.8\linewidth]{heatmap.png}}
+    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/heatmap.png}}
     \caption{Grad-CAM heat maps of prediction focus regions.}
     \label{grad_cam}
 \end{figure}
@@ -193,7 +193,7 @@ We used Grad-CAM (Gradient-weighted Class Activation Mapping) heat map visualiza
 For the purpose of model training, we will be utilizing the FairFace Dataset\cite{karkkainen2021fairface}. This dataset contains 108,501 images and is balanced on race. Seven races are defined White, Black, Indian, East Asian, Southeast Asian, Middle East, and Latino. Images were collected from the YFCC-100M Flickr dataset\cite{thomee2016yfcc100m}.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.8\linewidth]{fairFaceOriginalDistribution.png}}
+    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/fairFaceOriginalDistribution.png}}
     \caption{Distribution of races in the FairFace training dataset.}
     \label{racial_distribution}
 \end{figure}
@@ -202,7 +202,7 @@ For the purpose of model training, we will be utilizing the FairFace Dataset\cit
 For ease of calculations and testing, we opted to follow in similar steps to\cite{dhar2022distill} in which we combine and binarize the dataset. Regrouping the FairFace\cite{karkkainen2021fairface} data set into two skin tone categories Light (‘White’ $\cup$ ‘East Asian’) and Dark (‘Indian’ $\cup$ ‘Black’). As \cite{dhar2022distill} mentions the skin label is not perfectly correlated with race, but it does have a high correlation nonetheless. 
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.8\linewidth]{RegroupDistributionFairFace.png}}
+    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/RegroupDistributionFairFace.png}}
     \caption{Dataset distribution after data binarization.}
     \label{binarized_data}
 \end{figure}
