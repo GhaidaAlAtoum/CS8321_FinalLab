@@ -18,19 +18,19 @@ model_config:
         block_1:
             num_conv_layers: 2
             num_filters: 64
-            kernel_size: 3
+            kernel_size: 5
         block_2:
             num_conv_layers: 2
             num_filters: 64
-            kernel_size: 3
+            kernel_size: 5
         block_3:
             num_conv_layers: 2
             num_filters: 64
-            kernel_size: 3
+            kernel_size: 5
         block_4:
             num_conv_layers: 2
             num_filters: 64
-            kernel_size: 3
+            kernel_size: 5
     flatt_layers:
         flat_1:
             num_units: 4096

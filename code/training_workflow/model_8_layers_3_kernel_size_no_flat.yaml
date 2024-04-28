@@ -31,8 +31,3 @@ model_config:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
-    flatt_layers:
-        flat_1:
-            num_units: 4096
-        flat_2:
-            num_units: 4096

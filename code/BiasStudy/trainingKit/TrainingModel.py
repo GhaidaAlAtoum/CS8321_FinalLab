@@ -112,6 +112,7 @@ class BiasModel():
         self,
         train_generator,
         validation_generator,
+        use_multiprocessing = False,
         fit_verbose: int = 1, 
         callback_verbose: int = 0
     ):
@@ -148,7 +149,8 @@ class BiasModel():
             epochs = train_config.get_epoch_num(),
             validation_data = validation_generator,
             callbacks = callbacks_list,
-            verbose = fit_verbose
+            verbose = fit_verbose,
+            use_multiprocessing = use_multiprocessing
         )
         self.logger.info("Completed Fitting the model")
     
