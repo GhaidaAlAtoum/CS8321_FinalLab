@@ -26,3 +26,7 @@ This model was just utilized for purposes of confirming bias calculation methods
 * [Weights Installed From](https://drive.google.com/file/d/1AHVpuB24lKAqNyRRjhX7ABlEor6ByZlS/view)
 
 
+# Helpful Training Information
+
+  * [CKPT/HDF4/PB](https://stackoverflow.com/questions/59887312/when-to-use-the-ckpt-vs-hdf5-vs-pb-file-extensions-in-tensorflow-model-savin)
+  * 
