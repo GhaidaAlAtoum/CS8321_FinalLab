@@ -1,11 +1,11 @@
 run_config:
     general:
         batch_size: 64
-        output_dir: "./outputs"
-        # output_dir: "./outputs/training-output-dataset"
+        # output_dir: "./outputs"
+        output_dir: "./outputs/training-output-dataset"
     train_dataset:
-        # fair_face_path: "/inputs/fair-face-volume/fairface"
-        fair_face_path: "/notebooks/data/fairface/"
+        fair_face_path: "/inputs/fair-face-volume/fairface"
+        # fair_face_path: "/notebooks/data/fairface/"
         overwrite_sample_number: true
         number_samples: 100
     train_config:

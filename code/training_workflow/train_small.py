@@ -5,7 +5,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model_config_path', type=str, required=True)
 parser.add_argument('-o', '--logging_output_dir', type=str, required=True)
 
-sys.path.append('/notebooks/code/')
+# sys.path.append('/notebooks/code/')
 from BiasStudy import datasets, predictionKit
 from BiasStudy.datasets import FairFaceDataset
 from BiasStudy.config.TrainingConfig import BiasStudyConfig

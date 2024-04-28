@@ -7,3 +7,5 @@ play_ground_code/
 **/__pycache__/
 .DS_Store
 play_ground_code.zip
+*egg-info/
+code/BiasStudy/build/

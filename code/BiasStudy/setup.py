@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -6,6 +6,6 @@ with open('requirements.txt') as f:
 setup(
    name='BiasStudy',
    version='1.0',
-   packages=['BiasStudy'],
+   packages=find_packages(),
    install_requires=required,
 )

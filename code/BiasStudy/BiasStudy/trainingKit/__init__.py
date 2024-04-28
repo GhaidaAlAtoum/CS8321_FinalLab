@@ -17,3 +17,6 @@ if environ.get('BIAS_STUDY_TF_SETUP') is None:
     print()
     print(f"Python {sys.version}")
     environ["BIAS_STUDY_TF_SETUP"] = '1'
+    
+from . import TrainingLogger
+from . import TrainingModel
