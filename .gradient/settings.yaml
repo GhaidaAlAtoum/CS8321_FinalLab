@@ -1,0 +1,4 @@
+integrations:
+  temp:
+    type: dataset
+    ref: paperspace/dsxhyndh2w0oaf6:latest
