@@ -61,17 +61,8 @@ jobs:
         ls /inputs/fair-face-volume/fairface/
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
-        echo "-------------------------------------- 1 - Setup ENV"
         cd training_workflow
-        source setup.sh
-        pip install /inputs/repo/code/BiasStudy/
-        echo "-------------------------------------- 3 - Run Training"
-        python3 ./train_small.py \
-        --model_config_path ./8_layers/model_8_layers_3_kernel_size_no_flat.yaml \
-        --logging_output_dir ./outputs/training-output-dataset
-        cp -R ./outputs/training-output-dataset /outputs
-        ls /outputs
-        ls -R /outputs/training-output-dataset
+        source ./setup_workflow_env_and_run.sh 8_layers 3 no_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -95,17 +86,8 @@ jobs:
         ls /inputs/fair-face-volume/fairface/
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
-        echo "-------------------------------------- 1 - Setup ENV"
         cd training_workflow
-        source setup.sh
-        pip install /inputs/repo/code/BiasStudy/
-        echo "-------------------------------------- 3 - Run Training"
-        python3 ./train_small.py \
-        --model_config_path ./8_layers/model_8_layers_5_kernel_size_no_flat.yaml \
-        --logging_output_dir ./outputs/training-output-dataset
-        cp -R ./outputs/training-output-dataset /outputs
-        ls /outputs
-        ls -R /outputs/training-output-dataset
+        source ./setup_workflow_env_and_run.sh 8_layers 5 no_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -129,17 +111,8 @@ jobs:
         ls /inputs/fair-face-volume/fairface/
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
-        echo "-------------------------------------- 1 - Setup ENV"
         cd training_workflow
-        source setup.sh
-        pip install /inputs/repo/code/BiasStudy/
-        echo "-------------------------------------- 3 - Run Training"
-        python3 ./train_small.py \
-        --model_config_path ./16_layers/model_16_layers_3_kernel_size_no_flat.yaml \
-        --logging_output_dir ./outputs/training-output-dataset
-        cp -R ./outputs/training-output-dataset /outputs
-        ls /outputs
-        ls -R /outputs/training-output-dataset
+        source ./setup_workflow_env_and_run.sh 16_layers 3 no_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -163,18 +136,8 @@ jobs:
         ls /inputs/fair-face-volume/fairface/
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
-        echo "-------------------------------------- 1 - Setup ENV"
         cd training_workflow
-        source setup.sh
-        pip install /inputs/repo/code/BiasStudy/
-        echo "-------------------------------------- 3 - Run Training"
-        python3 ./train_small.py \
-        --model_config_path ./16_layers/model_16_layers_5_kernel_size_no_flat.yaml \
-        --logging_output_dir ./outputs/training-output-dataset
-        echo "-------------------------------------- 4 - List outputs"
-        cp -R ./outputs/training-output-dataset /outputs
-        ls /outputs
-        ls -R /outputs/training-output-dataset
+        source ./setup_workflow_env_and_run.sh 16_layers 5 no_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:

@@ -6,7 +6,7 @@ run_config:
     train_dataset:
         fair_face_path: "/inputs/fair-face-volume/fairface"
         # fair_face_path: "/notebooks/data/fairface/"
-        overwrite_sample_number: true
+        overwrite_sample_number: false
         number_samples: 100
     train_config:
         num_epochs: 3
