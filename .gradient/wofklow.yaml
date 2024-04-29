@@ -12,10 +12,7 @@ jobs:
     uses: git-checkout@v1
     with:
       url: context.event.github.url
-      # url: https://github.com/GhaidaAlAtoum/test_gradient_workflow.git# 'on':
-#   github:
-#     branches:
-#       only: main
+      # url: https://github.com/GhaidaAlAtoum/test_gradient_workflow.git#
 jobs:
   CloneRepo:
     resources:
