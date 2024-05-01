@@ -13,7 +13,7 @@ fi
 #     echo "3rd Argument needs to be no_flat or with_flat"
 # fi
 
-if [ "$3" != "no_flat" -a "$1" != "with_flat" ];then
+if [ "$3" != "no_flat" -a "$3" != "with_flat" ];then
     echo "3rd Argument needs to be \"no_flat\" or \"with_flat\""
     exit 1
 fi
