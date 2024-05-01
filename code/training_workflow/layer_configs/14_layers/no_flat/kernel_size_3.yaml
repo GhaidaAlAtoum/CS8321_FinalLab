@@ -13,7 +13,7 @@ run_config:
         early_stopping_patience: 10
         checkpoint_frequencey: 5
 model_config:
-    model_name: "model_8conv_3kernel"
+    model_name: "model_14conv_3kernel_no_flat"
     conv_blocks:
         block_1:
             num_conv_layers: 2
