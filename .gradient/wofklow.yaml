@@ -44,7 +44,7 @@ jobs:
         echo "-------------------------------------- 4"
       image: tensorflow/tensorflow:2.12.0-gpu
   
-  TrainEightLayersThreeKernelSizeNoFlat:
+  TrainEightLayersThreeKernelSizeWithFlat:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -59,7 +59,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh 8_layers 3 no_flat
+        source ./setup_workflow_env_and_run.sh 8_layers 3 with_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -69,7 +69,7 @@ jobs:
     resources:
       instance-type: A5000
   
-  TrainEightLayersFiveKernelSizeNoFlat:
+  TrainEightLayersFiveKernelSizeWithFlat:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -84,7 +84,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh 8_layers 5 no_flat
+        source ./setup_workflow_env_and_run.sh 8_layers 5 with_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -94,7 +94,7 @@ jobs:
     resources:
       instance-type: A5000
   
-  TrainSixteenLayersThreeKernelSizeNoFlat:
+  TrainSixteenLayersThreeKernelSizeWithFlat:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -109,7 +109,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh 16_layers 3 no_flat
+        source ./setup_workflow_env_and_run.sh 16_layers 3 with_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -119,7 +119,7 @@ jobs:
     resources:
       instance-type: A5000
   
-  TrainSixteenLayersFiveKernelSizeNoFlat:
+  TrainSixteenLayersFiveKernelSizeWithFlat:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -134,7 +134,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh 16_layers 5 no_flat
+        source ./setup_workflow_env_and_run.sh 16_layers 5 with_flat
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:

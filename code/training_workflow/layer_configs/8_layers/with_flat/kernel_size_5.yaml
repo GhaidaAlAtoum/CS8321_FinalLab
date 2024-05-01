@@ -33,6 +33,6 @@ model_config:
             kernel_size: 5
     flatt_layers:
         flat_1:
-            num_units: 4096
+            num_units: 2048
         flat_2:
-            num_units: 4096
+            num_units: 2048
