@@ -9,8 +9,8 @@ run_config:
         overwrite_sample_number: false
         number_samples: 100
     train_config:
-        num_epochs: 12
-        early_stopping_patience: 10
+        num_epochs: 30
+        early_stopping_patience: 3
         checkpoint_frequencey: 5
 model_config:
     model_name: "model_16conv_3kernel_no_flat"
