@@ -11,7 +11,7 @@ from tensorflow.keras import datasets, layers, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger, EarlyStopping
 from keras.preprocessing.image import DataFrameIterator
 from tensorflow.keras.layers import Input, Conv2D 
-from tensorflow.keras.layers import MaxPool2D, Flatten, Dense 
+from tensorflow.keras.layers import MaxPool2D, Flatten, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import categorical_crossentropy
 
@@ -83,6 +83,9 @@ class BiasModel():
                 
             self.model.add(
                 MaxPool2D(pool_size =2, strides =2, padding ='same', name="block{}_pool".format(block_num))
+            )
+            self.model.add(
+                Dropout(rate = 0.2)
             )
         
         self.model.add(Flatten(name = "flatten"))
