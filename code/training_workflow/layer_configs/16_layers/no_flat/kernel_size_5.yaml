@@ -13,7 +13,7 @@ run_config:
         early_stopping_patience: 3
         checkpoint_frequencey: 5
 model_config:
-    model_name: "model_16conv_5kernel_no_flat"
+    model_name: "model_16conv_5kernel_no_flat_learning_rate_plus_drop_out"
     conv_blocks:
         block_1:
             num_conv_layers: 2

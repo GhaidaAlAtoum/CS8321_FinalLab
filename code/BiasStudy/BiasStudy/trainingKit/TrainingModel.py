@@ -106,7 +106,7 @@ class BiasModel():
         else:
             loss = "mean_squared_error"
         self.model.compile(
-            optimizer = Adam(learning_rate=0.001),
+            optimizer = (learning_rate=0.0001),
             loss = loss,
             metrics = ['accuracy']
         )
