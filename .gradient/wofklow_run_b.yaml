@@ -44,7 +44,7 @@ jobs:
         echo "-------------------------------------- 4"
       image: tensorflow/tensorflow:2.12.0-gpu
   
-  Run_B_8Layers_3Kernel:
+  Run-B-8Layers-3Kernel:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -69,7 +69,7 @@ jobs:
     resources:
       instance-type: A5000
 
-  Run_B_8Layers_5Kernel:
+  Run-B-8Layers-5Kernel:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -94,7 +94,7 @@ jobs:
     resources:
       instance-type: A5000
 
-  Run_B_16Layers_3Kernel:
+  Run-B-16Layers-3Kernel:
     needs:
       - CloneRepo
       - GetFairFaceDataset
@@ -119,7 +119,7 @@ jobs:
     resources:
       instance-type: A5000
 
-  Run_B_16Layers_5Kernel:
+  Run-B-16Layers-5Kernel:
     needs:
       - CloneRepo
       - GetFairFaceDataset
