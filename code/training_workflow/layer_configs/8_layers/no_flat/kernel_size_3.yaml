@@ -9,9 +9,11 @@ run_config:
         overwrite_sample_number: false
         number_samples: 100
     train_config:
-        num_epochs: 30
+        num_epochs: 15
         early_stopping_patience: 3
         checkpoint_frequencey: 5
+        # Learning_rate is optional will default to 0.001 if not set
+        learning_rate: 0.001
 model_config:
     model_name: "model_8conv_3kernel_no_flat"
     conv_blocks:
@@ -19,15 +21,20 @@ model_config:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
+            # dropout_enaled is optional will default to false
+            dropout_enaled: true
         block_2:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
+            dropout_enaled: true
         block_3:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
+            dropout_enaled: true
         block_4:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
+            dropout_enaled: true

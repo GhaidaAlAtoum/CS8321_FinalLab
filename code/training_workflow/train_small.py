@@ -26,6 +26,7 @@ main_logger = TrainingLogger.setup_logger(
 main_logger.info("Loading Model Config from {}".format(args.model_config_path))
 
 bias_config = BiasStudyConfig(args.model_config_path)
+
 train_dataset_config = bias_config.get_train_dataset_config()
 
 
@@ -76,7 +77,7 @@ bias_model = BiasModel(
     bias_config = bias_config
 )
 
-bias_model.get_model().summary()
+bias_model.get_model().summary(print_fn=main_logger.info)
 
 bias_model.compile_model()
 

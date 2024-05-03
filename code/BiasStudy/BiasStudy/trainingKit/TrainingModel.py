@@ -8,13 +8,12 @@ import tensorflow.keras
 from tensorflow import keras
 from tensorflow.keras.models import Model
 from tensorflow.keras import datasets, layers, models
-from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger, EarlyStopping
+from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger, EarlyStopping, LearningRateScheduler
 from keras.preprocessing.image import DataFrameIterator
 from tensorflow.keras.layers import Input, Conv2D 
 from tensorflow.keras.layers import MaxPool2D, Flatten, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import categorical_crossentropy
-
 
 # https://stackoverflow.com/a/72746245
 class EpochModelCheckpoint(tf.keras.callbacks.ModelCheckpoint):
@@ -84,9 +83,8 @@ class BiasModel():
             self.model.add(
                 MaxPool2D(pool_size =2, strides =2, padding ='same', name="block{}_pool".format(block_num))
             )
-            self.model.add(
-                Dropout(rate = 0.2)
-            )
+            if conv_block.is_dropout_enabled():
+                self.model.add(Dropout(rate = 0.2))
         
         self.model.add(Flatten(name = "flatten"))
         
@@ -105,8 +103,9 @@ class BiasModel():
             loss = "categorical_crossentropy"
         else:
             loss = "mean_squared_error"
+        train_config = self.bias_config.get_train_config()
         self.model.compile(
-            optimizer = (learning_rate=0.0001),
+            optimizer = Adam(learning_rate=train_config.get_learning_rate()),
             loss = loss,
             metrics = ['accuracy']
         )
@@ -137,6 +136,7 @@ class BiasModel():
             append = True
         )
 
+        self.logger.info("Early Stopping Defined with patience {}".format(train_config.get_early_stopping_patience()))
         early_stopping = EarlyStopping(
             monitor='val_loss', 
             patience=train_config.get_early_stopping_patience(), 
@@ -170,8 +170,8 @@ class BiasModel():
         Path(weight_dir).mkdir(parents=True, exist_ok=True)
         
         self.model.save(model_dir + "model.h5")
-        self.model.save_weights(weight_dir)
-
+        self.model.save_weights(weight_dir + "weights.h5")
+        
     def __create_train_dirs(self):
         output_dir_name = self.bias_config.get_general_config().get_output_dir()
         checkpoint_dir = "{}/{}/checkpoints/".format(output_dir_name, self.model_name)

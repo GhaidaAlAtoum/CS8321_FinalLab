@@ -8,13 +8,13 @@ def setup_logger(
 ):
     formatter = logging.Formatter(fmt='------------ %(asctime)s %(levelname)-8s %(message)s',
                                   datefmt='%Y-%m-%d %H:%M:%S')
-    logging_output_dir = "{}/logs".format(output_dir)
-    Path(logging_output_dir).mkdir(parents=True, exist_ok=True)
+    logging_output_dir = get_logger_outputdir(output_dir)
     
-    logging_output_file_path = "{}/{}.txt".format(
+    logging_output_file_path = "{}/{}.log".format(
         logging_output_dir,
         logger_name
     )
+    
     handler = logging.FileHandler(logging_output_file_path, mode='w')
     handler.setFormatter(formatter)
     screen_handler = logging.StreamHandler(stream=sys.stdout)
@@ -24,3 +24,8 @@ def setup_logger(
     logger.addHandler(handler)
     logger.addHandler(screen_handler)
     return logger
+
+def get_logger_outputdir(output_dir: str):
+    logging_output_dir = "{}/logs".format(output_dir)
+    Path(logging_output_dir).mkdir(parents=True, exist_ok=True)
+    return logging_output_dir

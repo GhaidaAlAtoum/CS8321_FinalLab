@@ -1,4 +1,5 @@
 import yaml
+from pathlib import Path
 
 class GeneralRunConfig():
     GENERAL_CONFIG_KEY = "general"
@@ -104,6 +105,7 @@ class TrainingConfig():
     NUM_EPOCHS_KEY = "num_epochs"
     EARLY_STOPPING_PATIENCE_KEY = "early_stopping_patience"
     CHECK_POINT_FREQ_KEY = "checkpoint_frequencey"
+    LEARNING_RATE = "learning_rate"
     
     def __init__(self, config_dict: dict):
         self.__validate_training_config(config_dict)
@@ -121,11 +123,14 @@ class TrainingConfig():
             raise Exception(
                 "{} Missing one/or more of the following : {}".format(self.TRAIN_CONFIG_KEY, required_keys)
             )
+
     def __load_training_config(self, config_dict: dict):
         training_config = config_dict[self.TRAIN_CONFIG_KEY]
         self.epoch_num = training_config[self.NUM_EPOCHS_KEY]
         self.early_stopping_patience = training_config[self.EARLY_STOPPING_PATIENCE_KEY]
         self.checkpoint_frequencey = training_config[self.CHECK_POINT_FREQ_KEY]
+        
+        self.learning_rate = training_config.get(self.LEARNING_RATE, 0.001)
     
     def get_epoch_num(self) -> int:
         return self.epoch_num
@@ -135,6 +140,9 @@ class TrainingConfig():
     
     def get_checkpoint_frequencey(self) -> int:
         return self.checkpoint_frequencey
+    
+    def get_learning_rate(self) -> float:
+        return self.learning_rate
             
     @classmethod
     def get_base_key(cls) -> str:
@@ -165,6 +173,7 @@ class ConvBlockConfig():
     NUM_CONV_LAYERS = "num_conv_layers"
     NUM_FILTERS_PER_CONV = "num_filters"
     KERNEL_SIZE = "kernel_size"
+    DROPOUT_ENABLED = "dropout_enaled"
     
     def __init__(self, block_name: str, conv_block_config: dict):
         self.block_name = block_name
@@ -188,6 +197,7 @@ class ConvBlockConfig():
         self.num_conv_layers = self.conv_block_config[self.NUM_CONV_LAYERS]
         self.num_filters = self.conv_block_config[self.NUM_FILTERS_PER_CONV]
         self.kernel_size = self.conv_block_config[self.KERNEL_SIZE]
+        self.dropout_enaled = self.conv_block_config.get(self.DROPOUT_ENABLED, False)
         
     def get_block_name(self) -> str:
         return self.block_name
@@ -200,6 +210,9 @@ class ConvBlockConfig():
         
     def get_kernel_size(self) -> int:
         return self.kernel_size
+    
+    def is_dropout_enabled(self) -> bool:
+        return self.dropout_enaled
     
 
 class ModelConfig():
@@ -263,6 +276,7 @@ class BiasStudyConfig():
         self.train_dataset_config = TrainingDataSetConfig(self.run_config_dict)
         self.train_config = TrainingConfig(self.run_config_dict)
         self.modle_config = ModelConfig(self.model_config_dict)
+        self.save_config_yaml()
         
     def __validate_config(self):
         if self.RUN_CONFIG_KEY not in self.config_dict:
@@ -284,10 +298,9 @@ class BiasStudyConfig():
             raise Exception(
                 "Missing one/or more of the following : {}".format(required_run_keys)
             )
-    
+        
     def get_general_config(self) -> GeneralRunConfig:
         return self.general_config
-    
     
     def get_train_dataset_config(self) -> TrainingDataSetConfig:
         return self.train_dataset_config
@@ -305,3 +318,19 @@ class BiasStudyConfig():
             config = yaml.safe_load(stream)
         
         return config
+    
+    def save_config_yaml(self):
+        output_dir_name = self.general_config.get_output_dir()
+        model_name = self.modle_config.get_model_name()
+        config_dir = "{}/{}/config/".format(output_dir_name, model_name)
+        Path(config_dir).mkdir(parents=True, exist_ok=True)
+        
+        config_path = "{}/config.yaml".format(config_dir)
+        with open(config_path, "w", encoding = "utf-8") as yaml_file:
+            dump = yaml.dump(
+                self.config_dict, 
+                default_flow_style = False,
+                allow_unicode = True, 
+                encoding = None
+            )
+            yaml_file.write(dump)
