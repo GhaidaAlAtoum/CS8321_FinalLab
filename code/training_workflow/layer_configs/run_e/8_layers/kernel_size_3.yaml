@@ -15,7 +15,7 @@ run_config:
         # Learning_rate is optional will default to 0.001 if not set
         learning_rate: 0.0001
 model_config:
-    model_name: "model_8conv_3kernel_no_flat"
+    model_name: "run_e_model_8conv_3kernel_no_flat"
     conv_blocks:
         block_1:
             num_conv_layers: 2

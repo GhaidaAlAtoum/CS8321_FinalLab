@@ -14,7 +14,7 @@ run_config:
         checkpoint_frequencey: 5
         learning_rate: 0.001
 model_config:
-    model_name: "model_16conv_3kernel_no_flat"
+    model_name: "run_b_model_16conv_3kernel_no_flat"
     conv_blocks:
         block_1:
             num_conv_layers: 2
