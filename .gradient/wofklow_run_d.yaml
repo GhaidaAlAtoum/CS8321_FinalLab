@@ -58,7 +58,7 @@ jobs:
     resources:
       instance-type: A5000
 
-  Run_D_8Layers_5Kernel:
+  Run-D-8Layers-5Kernel:
     needs:
       - CloneRepo
       - GetFairFaceDataset
