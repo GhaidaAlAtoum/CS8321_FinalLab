@@ -11,17 +11,6 @@ jobs:
         type: volume
     uses: git-checkout@v1
     with:
-      url: context.event.github.url
-      # url: https://github.com/GhaidaAlAtoum/test_gradient_workflow.git#
-jobs:
-  CloneRepo:
-    resources:
-      instance-type: C5
-    outputs:
-      repo:
-        type: volume
-    uses: git-checkout@v1
-    with:
       # url: context.event.github.url
       url: https://github.com/GhaidaAlAtoum/CS8321_FinalLab.git
   
