@@ -1,0 +1,5 @@
+* With 2 Flat Layers
+* 30 epochs 
+* 3 epoch patience
+* No dropouts
+* 0.001 learning rate

@@ -1,0 +1,145 @@
+# 'on':
+#   github:
+#     branches:
+#       only: main
+jobs:
+  CloneRepo:
+    resources:
+      instance-type: C5
+    outputs:
+      repo:
+        type: volume
+    uses: git-checkout@v1
+    with:
+      url: context.event.github.url
+      # url: https://github.com/GhaidaAlAtoum/test_gradient_workflow.git#
+jobs:
+  CloneRepo:
+    resources:
+      instance-type: C5
+    outputs:
+      repo:
+        type: volume
+    uses: git-checkout@v1
+    with:
+      # url: context.event.github.url
+      url: https://github.com/GhaidaAlAtoum/CS8321_FinalLab.git
+  
+  GetFairFaceDataset:
+    resources:
+      instance-type: C5
+    outputs:
+      fair-face-volume:
+        type: volume
+    uses: script@v1
+    with:
+      script: |-
+        echo "-------------------------------------- 1"
+        pip install --upgrade pip setuptools wheel
+        pip install kaggle
+        echo "-------------------------------------- 2"
+        kaggle datasets download -d ghaidaalatoum/fairface -p /outputs/fair-face-volume/ --unzip 
+        echo "-------------------------------------- 3"
+        ls  /outputs/fair-face-volume/
+        echo "-------------------------------------- 4"
+      image: tensorflow/tensorflow:2.12.0-gpu
+  
+  Run_A_8Layers_3Kernel:
+    needs:
+      - CloneRepo
+      - GetFairFaceDataset
+    inputs:
+      repo: CloneRepo.outputs.repo
+      fair-face-volume: GetFairFaceDataset.outputs.fair-face-volume
+    uses: script@v1
+    with:
+      script: |-
+        echo "-------------------------------------- 0 - List Training Data"
+        ls /inputs/fair-face-volume/fairface/
+        echo "-------------------------------------- 2 - Access Repo" 
+        cd /inputs/repo/code
+        cd training_workflow
+        source ./setup_workflow_env_and_run.sh run_a 8_layers 3
+      image: tensorflow/tensorflow:2.12.0-gpu
+    outputs:
+      training-output-dataset:
+        type: dataset
+        with:
+          ref: "dsr7vrv37bx8exu"
+    resources:
+      instance-type: A5000
+
+  Run_A_8Layers_5Kernel:
+    needs:
+      - CloneRepo
+      - GetFairFaceDataset
+    inputs:
+      repo: CloneRepo.outputs.repo
+      fair-face-volume: GetFairFaceDataset.outputs.fair-face-volume
+    uses: script@v1
+    with:
+      script: |-
+        echo "-------------------------------------- 0 - List Training Data"
+        ls /inputs/fair-face-volume/fairface/
+        echo "-------------------------------------- 2 - Access Repo" 
+        cd /inputs/repo/code
+        cd training_workflow
+        source ./setup_workflow_env_and_run.sh run_a 8_layers 5
+      image: tensorflow/tensorflow:2.12.0-gpu
+    outputs:
+      training-output-dataset:
+        type: dataset
+        with:
+          ref: "dsr7vrv37bx8exu"
+    resources:
+      instance-type: A5000
+
+  Run_A_16Layers_3Kernel:
+    needs:
+      - CloneRepo
+      - GetFairFaceDataset
+    inputs:
+      repo: CloneRepo.outputs.repo
+      fair-face-volume: GetFairFaceDataset.outputs.fair-face-volume
+    uses: script@v1
+    with:
+      script: |-
+        echo "-------------------------------------- 0 - List Training Data"
+        ls /inputs/fair-face-volume/fairface/
+        echo "-------------------------------------- 2 - Access Repo" 
+        cd /inputs/repo/code
+        cd training_workflow
+        source ./setup_workflow_env_and_run.sh run_a 16_layers 3
+      image: tensorflow/tensorflow:2.12.0-gpu
+    outputs:
+      training-output-dataset:
+        type: dataset
+        with:
+          ref: "dsr7vrv37bx8exu"
+    resources:
+      instance-type: A5000
+
+  Run_A_16Layers_5Kernel:
+    needs:
+      - CloneRepo
+      - GetFairFaceDataset
+    inputs:
+      repo: CloneRepo.outputs.repo
+      fair-face-volume: GetFairFaceDataset.outputs.fair-face-volume
+    uses: script@v1
+    with:
+      script: |-
+        echo "-------------------------------------- 0 - List Training Data"
+        ls /inputs/fair-face-volume/fairface/
+        echo "-------------------------------------- 2 - Access Repo" 
+        cd /inputs/repo/code
+        cd training_workflow
+        source ./setup_workflow_env_and_run.sh run_a 16_layers 5
+      image: tensorflow/tensorflow:2.12.0-gpu
+    outputs:
+      training-output-dataset:
+        type: dataset
+        with:
+          ref: "dsr7vrv37bx8exu"
+    resources:
+      instance-type: A5000

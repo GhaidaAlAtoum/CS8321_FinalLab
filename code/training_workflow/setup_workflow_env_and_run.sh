@@ -3,33 +3,26 @@
 if [ "$#" -lt 3 ]
 then
   echo "No arguments supplied - Require 3 arguments:"
-  echo "1. Directory under layer_configs to get config from"
-  echo "2. Kernel size for \"kernel_size_[2].yaml\" file"
-  echo "3. with_flat or no_flat"
+  echo "1. Run Directory"
+  echo "2. Directory under layer_configs to get config from"
+  echo "3. Kernel size for \"kernel_size_[2].yaml\" file"
   exit 1
 fi
 
-# if [[ "${$3}" != @(no_flat|with_flat) ]]; then
-#     echo "3rd Argument needs to be no_flat or with_flat"
-# fi
-
-if [ "$3" != "no_flat" -a "$3" != "with_flat" ];then
-    echo "3rd Argument needs to be \"no_flat\" or \"with_flat\""
-    exit 1
-fi
-
-CONFIG_DIR="./layer_configs/${1}/${3}"
+CONFIG_DIR="./layer_configs/${1}/${2}"
 
 if [ ! -d $CONFIG_DIR ]; then
   echo "$CONFIG_DIR does not exist."
   exit 1
 fi
 
-CONFIG_FILE="$CONFIG_DIR/kernel_size_${2}.yaml"
+CONFIG_FILE="$CONFIG_DIR/kernel_size_${3}.yaml"
 if [ ! -f $CONFIG_FILE ]; then
     echo "$CONFIG_FILE File not found!"
     exit 1
 fi
+
+echo "CONFIG PATH $CONFIG_FILE"
 
 set -e 
 
