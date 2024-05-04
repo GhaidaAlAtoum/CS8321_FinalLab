@@ -1,0 +1,25 @@
+run_config:
+    general:
+        batch_size: 64
+        # output_dir: "./outputs"
+        output_dir: "./outputs/training-output-dataset"
+    train_dataset:
+        fair_face_path: "/inputs/fair-face-volume/fairface"
+        # fair_face_path: "/notebooks/data/fairface/"
+        overwrite_sample_number: false
+        number_samples: 100
+    train_config:
+        num_epochs: 20
+        early_stopping_patience: 5
+        checkpoint_frequencey: 5
+        # Learning_rate is optional will default to 0.001 if not set
+        learning_rate: 0.0001
+        enable_early_stopping: true
+model_config:
+    model_name: "run_h_model_2conv_3kernel"
+    conv_blocks:
+        block_1:
+            num_conv_layers: 2
+            num_filters: 256
+            kernel_size: 3
+            dropout_enaled: true

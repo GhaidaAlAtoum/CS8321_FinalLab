@@ -1,0 +1,6 @@
+* No flat 
+* 20 epochs 
+* 5 early epoch patience 
+* With dropouts
+* 0.0001 learning rate - Lower 
+* Lower learning rate + dropout
