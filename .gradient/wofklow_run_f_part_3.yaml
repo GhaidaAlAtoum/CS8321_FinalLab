@@ -48,7 +48,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh run_e 14_layers 3
+        source ./setup_workflow_env_and_run.sh run_f 14_layers 3
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
@@ -73,7 +73,7 @@ jobs:
         echo "-------------------------------------- 2 - Access Repo" 
         cd /inputs/repo/code
         cd training_workflow
-        source ./setup_workflow_env_and_run.sh run_e 14_layers 5
+        source ./setup_workflow_env_and_run.sh run_f 14_layers 5
       image: tensorflow/tensorflow:2.12.0-gpu
     outputs:
       training-output-dataset:
