@@ -13,30 +13,34 @@ run_config:
         early_stopping_patience: 3
         checkpoint_frequencey: 5
         # Learning_rate is optional will default to 0.001 if not set
-        learning_rate: 0.001
-        # enable_early_stopping is optional will default to true if not set
-        enable_early_stopping: true
+        learning_rate: 0.0001
+        enable_early_stopping: false
 model_config:
-    model_name: "run_a_model_8conv_3kernel_no_flat"
+    model_name: "run_e_model_8conv_3kernel_no_flat"
     conv_blocks:
         block_1:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
             # dropout_enaled is optional will default to false
-            dropout_enaled: false
+            dropout_enaled: true
         block_2:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
-            dropout_enaled: false
+            dropout_enaled: true
         block_3:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
-            dropout_enaled: false
+            dropout_enaled: true
         block_4:
             num_conv_layers: 2
             num_filters: 64
             kernel_size: 3
-            dropout_enaled: false
+            dropout_enaled: true
+        block_5:
+            num_conv_layers: 2
+            num_filters: 64
+            kernel_size: 3
+            dropout_enaled: true

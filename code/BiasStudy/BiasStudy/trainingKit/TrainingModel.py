@@ -144,8 +144,11 @@ class BiasModel():
             min_delta=0.0001,
             verbose = callback_verbose
         )
-
-        callbacks_list = [checkpoint_callback, log_csv_callback, early_stopping]
+        
+        callbacks_list = [checkpoint_callback, log_csv_callback]
+        if train_config.is_early_stopping_enabled():
+            callbacks_list.append(early_stopping)
+            
         self.logger.info("Start Fitting the model")
         self.model.fit(
             train_generator,

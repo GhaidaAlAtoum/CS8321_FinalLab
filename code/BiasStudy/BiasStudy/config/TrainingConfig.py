@@ -106,6 +106,7 @@ class TrainingConfig():
     EARLY_STOPPING_PATIENCE_KEY = "early_stopping_patience"
     CHECK_POINT_FREQ_KEY = "checkpoint_frequencey"
     LEARNING_RATE = "learning_rate"
+    ENABLE_EARLY_STOPPING = "enable_early_stopping"
     
     def __init__(self, config_dict: dict):
         self.__validate_training_config(config_dict)
@@ -131,6 +132,7 @@ class TrainingConfig():
         self.checkpoint_frequencey = training_config[self.CHECK_POINT_FREQ_KEY]
         
         self.learning_rate = training_config.get(self.LEARNING_RATE, 0.001)
+        self.enable_early_stopping = training_config.get(self.ENABLE_EARLY_STOPPING, True)
     
     def get_epoch_num(self) -> int:
         return self.epoch_num
@@ -143,6 +145,9 @@ class TrainingConfig():
     
     def get_learning_rate(self) -> float:
         return self.learning_rate
+    
+    def is_early_stopping_enabled(self) -> bool:
+        return self.enable_early_stopping
             
     @classmethod
     def get_base_key(cls) -> str:
