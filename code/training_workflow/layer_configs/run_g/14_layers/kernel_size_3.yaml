@@ -1,0 +1,56 @@
+run_config:
+    general:
+        batch_size: 64
+        # output_dir: "./outputs"
+        output_dir: "./outputs/training-output-dataset"
+    train_dataset:
+        fair_face_path: "/inputs/fair-face-volume/fairface"
+        # fair_face_path: "/notebooks/data/fairface/"
+        overwrite_sample_number: false
+        number_samples: 100
+    train_config:
+        num_epochs: 30
+        early_stopping_patience: 3
+        checkpoint_frequencey: 5
+        # Learning_rate is optional will default to 0.001 if not set
+        learning_rate: 0.0001
+        enable_early_stopping: false
+model_config:
+    model_name: "run_g_model_14conv_3kernel"
+    conv_blocks:
+        block_1:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            # dropout_enaled is optional will default to false
+            dropout_enaled: true
+        block_2:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
+        block_3:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
+        block_4:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
+        block_5:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
+        block_6:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
+        block_7:
+            num_conv_layers: 2
+            num_filters: 128
+            kernel_size: 3
+            dropout_enaled: true
