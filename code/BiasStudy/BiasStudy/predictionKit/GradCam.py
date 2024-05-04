@@ -11,14 +11,17 @@ from typing import Callable
 import pathlib
 
 def make_gradcam_heatmap(
-    pre_processor_function: Callable,
     img_path: str, 
     model: Model, 
     last_conv_layer_name: str, 
+    pre_processor_function: Callable = None,
     pred_index=None
 ):
     img_array = load_image_as_array(img_path)
-    img_array = pre_processor_function(img_array)
+    
+    if pre_processor_function is not None:
+        img_array = pre_processor_function(img_array)
+    
     img_array = img_array.reshape(1,224,224,3)
     
     # First, we create a model that maps the input image to the activations
@@ -53,7 +56,7 @@ def make_gradcam_heatmap(
     # For visualization purpose, we will also normalize the heatmap between 0 & 1
     heatmap = tf.maximum(heatmap, 0) / tf.math.reduce_max(heatmap)
     return heatmap.numpy()
-
+    
 def save_and_display_gradcam(
     title: str,
     image_id: int,
@@ -100,3 +103,49 @@ def save_and_display_gradcam(
     # Display Grad CAM
     ax.imshow(superimposed_img)
     ax.set_title(title)
+
+def plot_multiple_grad_cam(
+    title: str,
+    image_dir: str,
+    light_sample: pd.DataFrame,
+    dark_sample: pd.DataFrame,
+    last_conv_layer_name: str,
+    model: Model,
+    pre_processor_function: Callable = None,
+    save_output: bool = False
+):
+    light_file_path = "{}/{}".format(image_dir, light_sample.file_path.item())
+    dark_file_path = "{}/{}".format(image_dir, dark_sample.file_path.item())
+    f, axs = plt.subplots(1, 2, sharey=True, figsize=(5,  7))
+    
+    heatmap_light = make_gradcam_heatmap(
+        pre_processor_function = pre_processor_function,
+        img_path = light_file_path, 
+        model = model, 
+        last_conv_layer_name = last_conv_layer_name
+    )
+
+    heatmap_dark = make_gradcam_heatmap(
+        pre_processor_function = pre_processor_function,
+        img_path = dark_file_path, 
+        model = model, 
+        last_conv_layer_name = last_conv_layer_name
+    )
+    
+    save_and_display_gradcam(
+        title = "{} - Light".format(title),
+        image_id = light_sample.image_id.item(),
+        img_path = light_file_path,
+        heatmap =  heatmap_light,
+        ax = axs[0],
+        save = save_output
+    )
+    
+    save_and_display_gradcam(
+        title = "{} - Dark".format(title),
+        image_id = dark_sample.image_id.item(),
+        img_path = dark_file_path,
+        heatmap =  heatmap_dark,
+        ax = axs[1],
+        save = save_output
+    )
