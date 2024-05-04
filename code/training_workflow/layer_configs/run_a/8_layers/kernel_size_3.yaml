@@ -17,7 +17,7 @@ run_config:
         # enable_early_stopping is optional will default to true if not set
         enable_early_stopping: true
 model_config:
-    model_name: "run_a_model_8conv_3kernel_no_flat"
+    model_name: "run_a_model_8conv_3kernel"
     conv_blocks:
         block_1:
             num_conv_layers: 2

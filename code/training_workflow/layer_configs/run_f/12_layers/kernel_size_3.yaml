@@ -16,7 +16,7 @@ run_config:
         learning_rate: 0.0001
         enable_early_stopping: false
 model_config:
-    model_name: "run_e_model_8conv_3kernel_no_flat"
+    model_name: "run_e_model_12conv_3kernel"
     conv_blocks:
         block_1:
             num_conv_layers: 2
