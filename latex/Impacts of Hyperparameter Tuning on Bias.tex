@@ -45,20 +45,13 @@ The increasing application of computer vision in facial recognition technology h
 \end{abstract}
 
 \section{Motivation}
-As advancements in computer vision increase, the application of facial recognition becomes more important. Today, a multitude of use cases impact our daily lives. Decisions involving employment, public security, criminal justice, law enforcement surveillance, airport passenger screening, and credit reporting \cite{labati2016biometric,amos2016openface} are just a few examples. The importance then, of understanding the underlying drivers of racial bias contributors is imperative to ensuring racial equity is present in them. We present several examples supporting the claim that the composition of data in many datasets are a contributing factor to racial bias. \cite{karkkainen2021fairface} describes:
-\begin{quote}
-“Despite the sheer amount of available data, existing public face datasets are strongly biased toward Caucasian faces, and other races (e.g., Latino) are significantly underrepresented. A recent study shows that most existing large scale face databases are biased towards 'lighter skin' faces (around 80\%), e.g. White, compared to 'darker' faces, e.g. Black\cite{merler2019diversity}. This means the model may not apply to some sub-populations and its results may not be compared across different groups without calibration. Biased data will produce biased models trained from it. This will raise ethical concerns about fairness of automated systems, which has emerged as a critical topic of study in the recent machine learning and AI literature\cite{hardt2016equality,corbett2017algorithmic}.”
-\end{quote}
+As advancements in computer vision increase, the application of facial recognition becomes more important. Today, a multitude of use cases impact our daily lives. Decisions involving employment, public security, criminal justice, law enforcement surveillance, airport passenger screening, and credit reporting \cite{labati2016biometric,amos2016openface} are just a few examples. The importance then, of understanding the underlying drivers of racial bias contributors is imperative to ensuring racial equity is present in them. We present several examples supporting the claim that the composition of data in many datasets are a contributing factor to racial bias. 
 
-As another example, Hellstrom, Dignum and Bensch \cite{hellstrom2020bias} describe the following: 
+Joy Buolamwini and Timnit Gebru in their seminal paper \textit{Gender Shades}\cite{pmlr-v81-buolamwini18a}, found that "a demographic group that is underrepresented [e.g. Black Females] in benchmark datasets can nonetheless be subjected to frequent targeting." Their study automated face recognition by law enforcement further illustrates the need for improvement. "A year-long research investigation across 100 police departments revealed that African-American individuals are more likely to be stopped by law enforcement and be subjected to face recognition searches than individuals of other ethnicities. False positives and unwarranted searches pose a threat to civil liberties. Some face recognition systems have been shown to misidentify people of color, women, and young people at high rates." Another example, Thomas Hellstrom, Virginia Dignum and Suna Bensch describes COMPAS, a computer program used for bail and sentencing decisions "has been labeled biased against black defendants\cite{hellstrom2020bias}."
 
-\begin{quote}
-“A wast[sic] majority of published research refer to social discrimination when talking about bias in machine learning. A typical, and frequently discussed, example of such model bias is COMPAS, a computer program used for bail and sentencing decisions. It has been labeled biased against black defendants\cite{Angwin_Larson_Kirchner_Mattu_2016}”  
-\end{quote}
+Examples of such partiality abound. Nada Hassanin quotes faculty of Law assistant professor Dr. Gideon Christian at the University of Calgary in her article \cite{Hassanin_2023}, “technology has been shown to have the capacity to replicate human bias. In some facial recognition technology, there is over 99\% accuracy rate in recognizing white male faces. But, when it comes to recognizing faces of color, especially the faces of Black women, the technology seems to manifest its highest error rate, which is about 35 per cent.”
 
-Facial Recognition technology has proven to perform poorly in many situations. Nada Hassanin quotes faculty of Law assistant professor Dr. Gideon Christian at the University of Calgary in her article \cite{Hassanin_2023}, \textit{Law Professor Explores Racial Bias Implications in Facial Recognition Technology}, “technology has been shown to have the capacity to replicate human bias. In some facial recognition technology, there is over 99\% accuracy rate in recognizing white male faces. But, when it comes to recognizing faces of color, especially the faces of Black women, the technology seems to manifest its highest error rate, which is about 35 per cent.” Further, he states “for people of color, facial recognition technology can wrongly match your face with that of some other person who might have committed a crime.” Christian cites cases in the U.S. when Black men were misidentified by facial recognition software, arrested and detained. The headline of a May 2023 article in Scientific American minces no words: \textit{Police Facial Recognition Software Can’t Tell Black People Apart}. Therefore, any study of computer vision performance in this field should approach the issue with broad ranging experimentation and datasets.
-
-We cite a timeline of papers that have investigated, evaluated and reviewed racial bias in facial recognition systems, such as\cite{hellstrom2020bias} 2020,\cite{karkkainen2021fairface} 2021, \cite{yucer2022measuring} 2022, \cite{dhar2022distill} 2022, \cite{yucer2023racial} 2023. Our research seeks to explore these findings in greater detail. We plan to build on and expand the methodologies used in these papers, along with the use of a more diverse dataset, and present a novel approach to understanding the effects of hyper-parameter tuning on measurable bias and why.
+In this paper, we intend to explore methods inspired by \cite{maze2018iarpa} and conduct analysis to determine whether the effects of hyper-parameter tuning on neural network architectures could potentially decrease some of the large error rate gaps identified in most facial recognition systems. 
 
 Through this investigation we seek to answer the following research questions:
 \begin{enumerate}
@@ -72,63 +65,91 @@ Further, we hypothesize that strategic adjustments in hyper-parameters, such as 
 \section{Related Work}
 \cite{yucer2023racial} Surveys all papers written until May of 2023 regarding racial bias within face recognition and efforts to mitigate it at each stage of the pipeline. Various means exist by which bias enters facial recognition models. Acquisition, the stages of initial image pre-processing and formulation from online resources which could introduce sampling bias; Face Localization, a facial alignment step to correct for positional, rotational, and scale variations of obtaining a canonical facial image representation which could be affected by pose bias; Face Representation, the process of optimizing a model to embed images into a feature embedding space and could introduce hyper-parameter bias and uncertainty bias; Face Verification, which includes one-to-one matching to determine whether two images belong to the same individual; and Face Identification, the one-to-many matching operation to identify an individual against  a set of reference images, both of which may introduce evaluation bias when the dataset used to evaluate is not accurately representative of the target population \cite{suresh2021framework}.
 
+Buolamwini and Gebru present the evaluation of three commercially available gender classification systems from Microsoft, IBM, and Face++ in\cite{pmlr-v81-buolamwini18a} and finds that darker-skinned females are the most misclassified group. Error rates among darker-skinned females reached a maximum of 34.7\% while similar rates for lighter-skinned males was 0.8\%. The authors developed a custom face image dataset called Pilot Parliamentary Benchmark (PPB) composed of images of members of parliament from three African countries and three European countries. They introduce the first intersectional demographic and phenotypic evaluation of face-based gender classification accuracy using the Fitzpatrick skin types\cite{fitzpatrick1988validity}, to their knowledge the first gender classification benchmark to do so. 
+
 Concepts that comprise good facial recognition datasets are introduced in \cite{monnerat2007machine} including technical standards International Organization for Standardization/International Electrotechnical Commission (IOS/IEC) 19794-5 and International Civil Aviation Organization (ICAO) 9303. These technical guidelines discuss best practices for image quality such as storage data types, observable characteristics in terms of gender, eye color, hair color, expression, properties (i.e. glasses), head pose (yaw, pitch, and roll), and facial landmark positions. Frequently, selected photos for facial recognition datasets from sources such as ”in-the-wild” face datasets do not conform to such requirements. \cite{vangara2019characterizing} compared ICAO compliance between African and Caucasian groups in the MORPH \cite{ricanek2006morph} dataset and found that slightly more than 48\% of the African-American images were rated as ICAO compliant while more than 57\% of Caucasian images were compliant. Balanced datasets such as FairFace \cite{karkkainen2021fairface} and annotation of datasets with facial phenotype attributes \cite{yucer2022measuring} have been introduced, targeting image acquisition, localization, and targeting evaluation bias. Our model training will utilize the FairFace dataset, a novel face image dataset with 7 racial categories defined across age groups and genders. Models trained from this dataset were found to be substantially more accurate with consistent accuracy across race and gender groups \cite{karkkainen2021fairface}.
 
 In \cite{dhar2021pass} the authors introduce a new metric called Bias Performance Coefficient (BPC) that measures the trade-off between bias reduction and drop in verification performance. The PASS framework achieves better BPC values than existing baselines. Additionally, they introduce a method to quantitatively describe gender and skin tone bias in the context of face verification. They define gender and skin tone bias at a given false positive rate (FPR). We will use these metrics as our baseline evaluation criteria to assess the impact of hyper-parameter tuning.
 
-Many solutions have been introduced to help in mitigating racial bias in face recognition such as ArcFace Loss Function \cite{deng2019arcface}, Distill and De-bias architecture \cite{dhar2021pass}, and many more. However, machine learning algorithms, particularly within deep learning, contain a large number of hyper-parameters that are not learned during training but are chosen by the user. These hyper-parameters include the number of layers, kernel size, learning rate, and number of epochs \cite{hellstrom2020bias}. One question that has not been explored is understanding the effect of human selected hyper-parameters on face recognition racial bias.
+Many solutions have been introduced to help in mitigating racial bias in face recognition such as ArcFace Loss Function \cite{deng2019arcface}, Distill and De-bias architecture \cite{dhar2022distill}, and many more. However, machine learning algorithms, particularly within deep learning, contain a large number of hyper-parameters that are not learned during training but are chosen by the user. These hyper-parameters include the number of layers, kernel size, learning rate, and number of epochs \cite{hellstrom2020bias}. One question that has not been explored is understanding the effect of human selected hyper-parameters on face recognition racial bias.
 
+\begin{table*}[htbp]
+\caption{Timeline of Works and Contributions}
+\centering
+\begin{tabular}{|p{7cm}|c|p{9cm}|}
+\hline
+\textbf{\textit{Title}} & \textbf{\textit{Year}} & \textbf{\textit{Contribution}} \\
+\hline
+Bias in Machine Learning--What is it Good for? \cite{hellstrom2020bias} & 2020 & Describes how bias in facial recognition systems are connected and depend on each other. The authors propose a complex relation between bias occurring in the machine learning pipeline and impacts social discrimination. \\
+\hline
+Fairface: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation 
+\cite{karkkainen2021fairface} & 2021 & Introduces the "FairFace" dataset. A novel face image dataset with 7 racial categories defined across age groups and genders designed to mitigate race bias. \\
+\hline
+Pass: Protected Attribute Suppression System for Mitigating Bias in Face Recognition\cite{dhar2021pass} & 2021 & Introduces a quantitative metric for measuring the trade-ff between bias reduction and drop in verification performance called the Bias Performance Coefficient (BPC) \\
+\hline
+Measuring Hidden Bias Within Face Recognition Via Racial Phenotypes \cite{yucer2022measuring} & 2022 & Introduces an alternative racial bias analysis methodology via facial phenotype attributes for face recognition rather than race categorization labels.  \\
+\hline
+Distill and De-bias: Mitigating Bias in Face Verification using Knowledge Distillation\cite{dhar2022distill} & 2022 & Proposes a novel distillation-based approach to enforce a network to attend to similar face regions, irrespective of the attribute category and illustrates it through the use of GradCAM. \\
+\hline
+Racial Bias Within Face Recognition: A survey \cite{yucer2023racial} & 2023 & Surveys the state of facial recognition bias and methods to combat it through the review of various papers in the field. \\
+\hline
+\end{tabular}
+\label{tab1}
+\end{table*}
+
+We cite a timeline of papers that have investigated, evaluated and reviewed racial bias in facial recognition systems in table one. Of note is the absence of study directly related to the impact of hyper-parameter variation.
 
 \section{Methods}
 \subsection{Network Architecture}
 We will explore a neural network that’s inspired by architectural design of VGG models. However, it’s important to note that we will not strictly adhere to the original hyper-parameters of the VGG architectures. Our focus will be investigating the effects of varying kernel sizes and number of convolution layers. 
 
-The variations we intend to study are detailed in figure 1.
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{latex/images/Matrix.png}}
-    \caption{Test matrix of hyper-parameters.}
-    \label{test_matrix}
-\end{figure}
+The variations we intend to study are detailed in table 2.
+
+% \begin{table}[!ht]
+% \centering
+% \caption{Test Matrix}
+% \label{tab:test_matrix}
+% \begin{tabular}{|p{3.5cm}|p{3.5cm}|}
+% \hline
+% \multirow{Kernel (3x3)} & \multirow{Kernel (5x5)} \\
+%  & \\
+% \hline
+% Total params: 434,839,848 Tranable params: 434,839,848 & Total params: 440,017,1927 trainable params: 440,017,192 \\
+% \hline
+% Total params: 61,550,888 Tranable params: 61,550,888 & Total params: 100,282,664 Trainable params: 100,282,664 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Test Matrix}
+\label{tab:test_matrix}
+\begin{tabular}{c|p{3.5cm}|p{3.5cm}|}
+\cline{2-3}
+ & \textbf{Kernel (3x3)} & \textbf{Kernel (5x5)} \\
+\hline
+\rotatebox[origin=c]{90}{\parbox{1cm}{\centering \textbf{8 Conv. Layers}}} &  &  \\
+& Total params: 434,839,848 Trainable params: 434,839,848 & Total params: 440,017,1927 trainable params: 440,017,192 \\
+\hline
+\rotatebox[origin=c]{90}{\parbox{1.1cm}{\centering \textbf{16 Conv. Layers}}} &  &  \\
+& Total params: 61,550,888 Trainable params: 61,550,888 & Total params: 100,282,664 Trainable params: 100,282,664 \\
+\hline
+\end{tabular}
+\end{table}
 
 
 \subsubsection{Kernel Sizes}
 We will compare the performance implication of using smaller kernel size (3x3) versus larger kernel (5x5).
 
-
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{latex/images/8_conv_layers_3x3Filters_noFlat.png}}
-    \caption{Variation 1: Kernel size 3x3 with 8 layers.}
-    \label{var1}
-\end{figure}
-
-
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{latex/images/8_conv_layers_5x5Filters_noFlat.png}}
-    \caption{Variation 3: Kernel size 5x5 with 8 layers.}
-    \label{var2}
-\end{figure}
-
 \subsubsection{Number of Convolutional Layers} 
 We will examine the impact of the network depth by training models with different numbers of layers, specifically 8 and 16 layers. 
-
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{latex/images/16_conv_layers_3x3Filters_noFlat.png}}
-    \caption{Variation 2: Kernel size 3x3 with 16 layers.}
-    \label{var3}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=1\linewidth]{latex/images/16_conv_layers_5x5Filters_noFlat.png}}
-    \caption{Variation 4: Kernel size 5x5 with 16 layers.}
-    \label{var4}
-\end{figure}
-
 
 We maintain rigorous control over the experimental conditions by training and testing each model configuration on an identical dataset for each configuration, applying a consistent loss function, and standardizing computational settings. This uniformity ensures that any observed differences in performance can be attributed to our variables of interest. Additionally, we control for other potential sources of variation by fixing independent parameters, such as learning rate and number of epochs, selecting their optimal values. Our primary focus remains on the manipulable dependent variables, which are kernel size and depth of the network layers.
 
 \subsection{Analysis Methods}
 To systematically present our findings, we will employ a suite of analytical metrics and visualization techniques, including the Accuracy Score, Bias Score, Bias/Performance Trade-off (BPC), ROC Curve, and Heatmap Visualization. For our analysis of face verification (1:1 matching), it is crucial to replicate conditions akin to those in the IJB-C \cite{maze2018iarpa} dataset, necessitating at least two images per subject. This requirement ensures robust testing of the model's ability to consistently recognize a subject across varied racial presentations, while also confirming that the model does not incorrectly match distinct subjects. Given these requirements, the FairFace Dataset does not meet our testing needs for this analysis due to its limitations in providing suitable image pairings. Instead, we have curated images from the LFWA+\cite{liu2015faceattributes} dataset to assemble the following experimental groups:
- 
+
 \begin{itemize}
     \item 116 light-light matching pairs
     \item 116 dark-dark matching pairs
@@ -136,7 +157,17 @@ To systematically present our findings, we will employ a suite of analytical met
     \item 116 dark-dark non matching pairs
 \end{itemize}
 
-This structured approach allows for precise measurement of the True Positive Rate (TPR) and False Positive Rate (FPR) within the light-light and dark-dark matching scenarios, respectively. As previously noted, many of the images in LFW datasets do not meet ICAO standards. However, we believe this issue is mitigated by model training on higher quality datasets and using the LFW images for test only.
+\subsubsection{
+Grouping and Pairing Mechanism for Image Selection:}
+---we might need to put two image pairs here ---
+
+In our study on the impact of hyper-parameters on bias, we categorized the diverse races in the LFWA+ dataset into two primary skin tone groups: light and dark. This binary classification is designed to focus our analysis on hyper-parameter effects distinctly, providing a controlled framework for our experiments.\cite{liu2015faceattributes}
+
+Matching Pairs: We formed matching pairs based on the same individual identity and similar skin tone. Each pair is composed of two different photographs of the same person, where both images share a comparable skin tone within their classified group. By forming matching pairs based on the same individual identity and similar skin tone, our approach establishes a consistent baseline from which to measure how different hyper-parameter settings influence bias within the same group. This setup ensures equality by providing uniform test conditions, facilitating precise comparisons of hyper-parameter impacts.
+
+Non-Matching Pairs: Each pair comprises of two different photographs of different individuals. Selecting differing identities within the same skin tone group allows us to explore the hyper-parameters' influence on the system’s ability to distinguish between distinct individuals under equivalent conditions. This method enhances our study’s focus on equity, examining whether hyper-parameter adjustments perpetuate, mitigate, or have no effect on bias between similarly categorized individuals.
+
+This overall structured approaches allows for precise measurement of the True Positive Rate (TPR) and False Positive Rate (FPR) within the light-light and dark-dark matching scenarios, respectively. As previously noted, many of the images in LFW datasets do not meet ICAO standards. However, we believe this issue is mitigated by model training on higher quality datasets and using the LFW images for test only.
 
 We introduce our analytical methodology by utilizing the VGG16 and VGG19 models, both pre-trained on the ImageNet\cite{deng2009imagenet} dataset. These models exemplify our approach and provide a baseline for comparison. For the comprehensive study intended for publication, we will develop custom models trained on the FairFace dataset\cite{karkkainen2021fairface}. This step will enable a focused examination of hyper-parameter impacts on model performance, though the fundamental methodology for assessing bias will remain unchanged.
 
@@ -209,16 +240,16 @@ For ease of calculations and testing, we opted to follow in similar steps to\cit
 
 The training data has 28,814 instances of ‘light’ and 24,552 of ‘dark’, which means we have an imbalance in our dataset. We will utilize random under-sampling to delete instances from the majority class ‘light’. For our study 24,552 instances per class should be sufficient to study the effect of hyper parameters on bias.
 
-% \section{Results and Conclusion}
-% \subsection{Limitations}
-% \subsubsection{Restricted Variation Study}
-% Our research primarily focuses on a limited subset of hyper-parameters, due to the complexity and extensive computational resources required for a broader analysis. By concentrating on key hyper-parameters, we aim to provide depth rather than breadth in our investigation. This strategic limitation allows for detailed exploration within the selected parameters but restricts our ability to generalize findings across a wider range of hyper-parameter configurations.
-% \subsubsection{Binarization of Racial Categories}
-% The decision to binarize racial categories into 'light' and 'dark' groups is driven by statistical considerations. This simplification facilitates a clearer analysis of bias and performance discrepancies between these two broadly categorized groups. However, this approach may overlook nuances and intra-group variations that could significantly impact model performance and bias. The reduction of racial diversity into binary categories is a pragmatic choice to manage complexity but may limit the granularity and applicability of our findings.
-% \subsubsection{Time Constraints}
-% The timeline of the research project has necessitated certain compromises in terms of the breadth and depth of the investigation. Extensive hyper-parameter tuning and larger-scale testing methodologies were curtailed to meet project deadlines. As a result, some potentially influential factors and interactions may not have been thoroughly explored.
-% \subsubsection{Computational Resource Limitations}
-% The availability of processing power is a significant constraint, particularly for deep learning models that require substantial computational resources. This limitation influenced our choice of models and the extent of hyper-parameter tuning feasible within our study, potentially restricting the robustness and variability of our experiments.
+\section{Results and Conclusion}
+\subsection{Limitations}
+\subsubsection{Restricted Variation Study}
+Our research primarily focuses on a limited subset of hyper-parameters, due to the complexity and extensive computational resources required for a broader analysis. By concentrating on key hyper-parameters, we aim to provide depth rather than breadth in our investigation. This strategic limitation allows for detailed exploration within the selected parameters but restricts our ability to generalize findings across a wider range of hyper-parameter configurations.
+\subsubsection{Binarization of Racial Categories}
+The decision to binarize racial categories into 'light' and 'dark' groups is driven by statistical considerations. This simplification facilitates a clearer analysis of bias and performance discrepancies between these two broadly categorized groups. However, this approach may overlook nuances and intra-group variations that could significantly impact model performance and bias. The reduction of racial diversity into binary categories is a pragmatic choice to manage complexity but may limit the granularity and applicability of our findings.
+\subsubsection{Time Constraints}
+The timeline of the research project has necessitated certain compromises in terms of the breadth and depth of the investigation. Extensive hyper-parameter tuning and larger-scale testing methodologies were curtailed to meet project deadlines. As a result, some potentially influential factors and interactions may not have been thoroughly explored.
+\subsubsection{Computational Resource Limitations}
+The availability of processing power is a significant constraint, particularly for deep learning models that require substantial computational resources. This limitation influenced our choice of models and the extent of hyper-parameter tuning feasible within our study, potentially restricting the robustness and variability of our experiments.
 
 
 
