@@ -56,7 +56,7 @@ jobs:
         with:
           ref: "dsr7vrv37bx8exu"
     resources:
-      instance-type: A5000
+      instance-type: A6000
 
   Run-H-6Layers-5Kernel:
     needs:
@@ -81,7 +81,7 @@ jobs:
         with:
           ref: "dsr7vrv37bx8exu"
     resources:
-      instance-type: A5000
+      instance-type: A6000
   
   Run-H-8Layers-3Kernel:
     needs:
@@ -106,7 +106,7 @@ jobs:
         with:
           ref: "dsr7vrv37bx8exu"
     resources:
-      instance-type: A5000
+      instance-type: A6000
 
   Run-H-8Layers-5Kernel:
     needs:
@@ -131,4 +131,4 @@ jobs:
         with:
           ref: "dsr7vrv37bx8exu"
     resources:
-      instance-type: A5000
+      instance-type: A6000
