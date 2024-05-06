@@ -83,7 +83,7 @@ def plot_roc(prediction_result: PredictionResults, fig_size: (int,int) = (5,5), 
     
     ax.set_xlabel('False Positive Rate')
     ax.set_ylabel('True Positive Rate')
-    ax.set_title("ROC - {} - BaseBiasScore {:.8f}".format(prediction_result.get_model_name(), prediction_result.get_base_bias_score()))
+    ax.set_title("ROC - {}\nBaseBiasScore {:.8f}".format(prediction_result.get_model_name(), prediction_result.get_base_bias_score()))
     ax.legend()
     
     if save:
