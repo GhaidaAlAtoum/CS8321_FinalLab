@@ -7,6 +7,11 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{subcaption}
+
+\captionsetup[figure]{font=small,labelfont=small}
+
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -73,7 +78,7 @@ In \cite{dhar2021pass} the authors introduce a new metric called Bias Performanc
 
 Many solutions have been introduced to help in mitigating racial bias in face recognition such as ArcFace Loss Function \cite{deng2019arcface}, Distill and De-bias architecture \cite{dhar2022distill}, and many more. However, machine learning algorithms, particularly within deep learning, contain a large number of hyper-parameters that are not learned during training but are chosen by the user. These hyper-parameters include the number of layers, kernel size, learning rate, and number of epochs \cite{hellstrom2020bias}. One question that has not been explored is understanding the effect of human selected hyper-parameters on face recognition racial bias.
 
-\begin{table*}[htbp]
+\begin{table*}[H]
 \caption{Timeline of Works and Contributions}
 \centering
 \begin{tabular}{|p{7cm}|c|p{9cm}|}
@@ -101,9 +106,9 @@ We cite a timeline of papers that have investigated, evaluated and reviewed raci
 
 \section{Methods}
 \subsection{Network Architecture}
-We will explore a neural network that’s inspired by architectural design of VGG models. However, it’s important to note that we will not strictly adhere to the original hyper-parameters of the VGG architectures. Our focus will be investigating the effects of varying kernel sizes and number of convolution layers. 
+We will explore a neural network that’s inspired by architectural design of VGG models. However, it’s important to note that we will not strictly adhere to the original hyper-parameters of the VGG architectures. Our focus will be investigating the effects of varying kernel sizes and number of convolution layers.
 
-The variations we intend to study are detailed in table 2.
+The hyperparameters we intend to study are:
 
 % \begin{table}[!ht]
 % \centering
@@ -121,7 +126,7 @@ The variations we intend to study are detailed in table 2.
 % \end{tabular}
 % \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Test Matrix}
 \label{tab:test_matrix}
@@ -138,45 +143,89 @@ The variations we intend to study are detailed in table 2.
 \end{tabular}
 \end{table}
 
-
 \subsubsection{Kernel Sizes}
 We will compare the performance implication of using smaller kernel size (3x3) versus larger kernel (5x5).
 
 \subsubsection{Number of Convolutional Layers} 
-We will examine the impact of the network depth by training models with different numbers of layers, specifically 8 and 16 layers. 
+We will examine the impact of the network depth by training models with different numbers of layers, specifically 4, 8 and 16 layers. 
 
 We maintain rigorous control over the experimental conditions by training and testing each model configuration on an identical dataset for each configuration, applying a consistent loss function, and standardizing computational settings. This uniformity ensures that any observed differences in performance can be attributed to our variables of interest. Additionally, we control for other potential sources of variation by fixing independent parameters, such as learning rate and number of epochs, selecting their optimal values. Our primary focus remains on the manipulable dependent variables, which are kernel size and depth of the network layers.
 
 \subsection{Analysis Methods}
-To systematically present our findings, we will employ a suite of analytical metrics and visualization techniques, including the Accuracy Score, Bias Score, Bias/Performance Trade-off (BPC), ROC Curve, and Heatmap Visualization. For our analysis of face verification (1:1 matching), it is crucial to replicate conditions akin to those in the IJB-C \cite{maze2018iarpa} dataset, necessitating at least two images per subject. This requirement ensures robust testing of the model's ability to consistently recognize a subject across varied racial presentations, while also confirming that the model does not incorrectly match distinct subjects. Given these requirements, the FairFace Dataset does not meet our testing needs for this analysis due to its limitations in providing suitable image pairings. Instead, we have curated images from the LFWA+\cite{liu2015faceattributes} dataset to assemble the following experimental groups:
+We will employ analytical metrics and visualization techniques to systematically present our findings, including the Accuracy Score, Bias Score, Bias/Performance Trade-off (BPC), ROC Curve, and Heatmap Visualization. For our analysis of face verification (1:1 matching), it is crucial to replicate conditions akin to those in the IJB-C \cite{maze2018iarpa} dataset, necessitating at least two images per subject. This requirement ensures robust testing of the model’s ability to consistently recognize a subject across varied racial presentations while confirming that the model does not incorrectly match distinct subjects. Given these requirements, the FairFace Dataset does not meet our testing needs for this analysis due to its limitations in providing suitable image pairings. Instead, we have curated images from the LFWA+\cite{liu2015faceattributes} dataset to assemble the following experimental groups:
 
 \begin{itemize}
     \item 116 light-light matching pairs
     \item 116 dark-dark matching pairs
-    \item 116 light-light non matching pairs
-    \item 116 dark-dark non matching pairs
+    \item 116 light-light non-matching pairs
+    \item 116 dark-dark non-matching pairs
 \end{itemize}
 
-\subsubsection{
-Grouping and Pairing Mechanism for Image Selection:}
+\subsubsection{Face Verification Testing Process}
 
-\begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/MatchingDark.png}}
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[height=0.3\linewidth]{latex/images/MatchingDark.png}
     \caption{Sample Matching Dark}
     \label{matching_dark}
+    
+    \centering
+    \includegraphics[height=0.3\linewidth]{latex/images/NonMatchingDark.png}
+    \caption{Sample Non-Matching Dark}
+    \label{non_matching_dark}
+
+    \centering
+    \includegraphics[height=0.3\linewidth]{latex/images/MatchingLight.png}
+    \caption{Sample Matching Light}
+    \label{matching_dark}
+
+    \centering
+    \includegraphics[height=0.3\linewidth]{latex/images/NonMatchingLight.png}
+    \caption{Sample Non-Matching Light}
+    \label{non_matching_dark}
 \end{figure}
 
----we might need to put two image pairs here ---
+The LFWA+ dataset provides one or more images per identity (person), along with four columns indicating the race. The four races defined in the LFWA+ dataset are ‘Black’, ‘White’, ‘Indian’, and ‘Asian’. To ensure the integrity of our experiment, we performed an initial clean-up of the dataset. This included removing instances in which an identity was marked multiple races, instances in which an identity was not marked under any race, and instances in which an identity had only one image. We then regrouped the data into Light (‘White’ ∪ ‘Asian’) and Dark (‘Indian’ ∪ ‘Black’) to match the skin pairing we performed on the training dataset FairFace. This binary classification is designed to focus our analysis on hyperparameter effects distinctly, providing a controlled framework for our experiments.  From ``Fig.~\ref{num_img_per_identity}'', we can deduce that the number of images per identity is not uniform and that the majority of identities have two images. Thus, the next step was to keep two images for each identity. Each two images per identity form a matching pair. From ``Fig.~\ref{num_pairings}'', the number of ‘Light’ matching pairs are more than the number of ‘Dark’ matching pairs; thus we undersampled the number of matching ‘Light’ pairs to the same number of matching  ‘Dark’ pairs as seen in ``Fig.~\ref{num_pairings_undersampled}''.
+Now that we have 116 matching pairs for ‘Light’ and 116 matching pairs for ‘DARK’, we can test if the model is able to verify that the same person exists in both images. However, testing if the model can verify it is the same person is only one part of face verification. The other necessary test is to ensure that the model can detect that the two different people from the same race do not match. This is where the non-matching pairs come into play. The last step was to create non matching pairs within each binary race, which we have decided to create additional 116 ‘Light’ non matching pairs, and 116 ‘Dark’ non matching pairs.  These non-matching pairs are crucial in testing the model's ability to differentiate between individuals of the same race. A sample of these pairings is shown in Figure G.
 
-In our study on the impact of hyper-parameters on bias, we categorized the diverse races in the LFWA+ dataset into two primary skin tone groups: light and dark. This binary classification is designed to focus our analysis on hyper-parameter effects distinctly, providing a controlled framework for our experiments.\cite{liu2015faceattributes}
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[height=0.5\linewidth]{latex/images/DistributionOfNumberOfImages.png}
+    \caption{Number of images per identity}
+    \label{num_img_per_identity}
+\end{figure}
 
-Matching Pairs: We formed matching pairs based on the same individual identity and similar skin tone. Each pair is composed of two different photographs of the same person, where both images share a comparable skin tone within their classified group. By forming matching pairs based on the same individual identity and similar skin tone, our approach establishes a consistent baseline from which to measure how different hyper-parameter settings influence bias within the same group. This setup ensures equality by providing uniform test conditions, facilitating precise comparisons of hyper-parameter impacts.
+\begin{figure}[hbt!]\captionsetup[subfigure]{font=footnotesize}
+  \centering
+  \begin{minipage}{.4\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{latex/images/NonUniformNumberOfPairings.png}
+    \caption{Number of pairs}
+    \label{num_pairings}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}{.4\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{latex/images/UniformNumberOfPairings.png}
+    \caption{Undersampled number of pairs}
+    \label{num_pairings_undersampled}
+  \end{minipage}%
+\end{figure}
 
-Non-Matching Pairs: Each pair comprises of two different photographs of different individuals. Selecting differing identities within the same skin tone group allows us to explore the hyper-parameters' influence on the system’s ability to distinguish between distinct individuals under equivalent conditions. This method enhances our study’s focus on equity, examining whether hyper-parameter adjustments perpetuate, mitigate, or have no effect on bias between similarly categorized individuals.
+As previously noted, many of the images in LFW datasets do not meet ICAO standards. However, we believe this issue is mitigated by model training on higher quality datasets and using the LFW images for test purposes only, a concept supported by \cite{taigman2014deepface}. 
 
-This overall structured approaches allows for precise measurement of the True Positive Rate (TPR) and False Positive Rate (FPR) within the light-light and dark-dark matching scenarios, respectively. As previously noted, many of the images in LFW datasets do not meet ICAO standards. However, we believe this issue is mitigated by model training on higher quality datasets and using the LFW images for test only.
+For the face verification test and measurement of bias, the output of the last non-prediction flat layer of the trained model would be the image embedding the model has learned to produce. We will measure the Cosine distance between the embeddings to determine if two images are classified as matching or non-matching. For the Cosine distance, typically, a threshold is selected in which values below the threshold indicate matching (small distance) and values above are non-matching (significant distance).  To measure the face verification performance for ‘Light’ pairs, we will ask the model to embed all ‘Light’ images, and then for each pair, we will measure the Cosine distance. The Cosine distances will be run through the SKlearn \texttt{roc\char`_curve} function to get the different possible thresholds and respective $FPR_{light-light}$ and $TPR_{light-light}$ values at each threshold. The same will be done for ‘Dark’ pairs, resulting in $FPR_{dark-dark}$ and $TPR_{dark-dark}$. 
 
-We introduce our analytical methodology by utilizing the VGG16 and VGG19 models, both pre-trained on the ImageNet\cite{deng2009imagenet} dataset. These models exemplify our approach and provide a baseline for comparison. For the comprehensive study intended for publication, we will develop custom models trained on the FairFace dataset\cite{karkkainen2021fairface}. This step will enable a focused examination of hyper-parameter impacts on model performance, though the fundamental methodology for assessing bias will remain unchanged.
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[height=0.5\linewidth]{latex/images/PredictedVsExpectedLight.png}
+    \caption{Classification Report for Light-Light}
+    \label{classification_report_light_light}
+    \centering
+    \includegraphics[height=0.5\linewidth]{latex/images/PredictedVsExpectedDark.png}
+    \caption{Classification Report for Dark-Dark}
+    \label{classification_report_dark_dark}
+\end{figure}
 
 \subsubsection{Bias Measure}
 Numerous face verification studies\cite{deng2019arcface},\cite{ranjan2019fast},\cite{liu2017sphereface},\cite{dhar2019measuring} report performance using ROC curve (TPR vs FPR). Per\cite{dhar2022distill},\cite{dhar2021pass} the following equation can be utilized to measure bias for a specific feature (skin tone, gender) at a given false positive rate (FPR):
@@ -189,13 +238,13 @@ Where $(TPR_{class1}^{(F)}, TPR_{class1}^{(F)})$ denote the true positive rates 
 \subsubsection{ROC Curve}
 The ROC Curve plots the True positive rate (TPR) against the False Positive rate (FPR) at various classification thresholds. The curve should help us select the optimal threshold for classification purposes. The curve also helps in visualizing the  quality of our model. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG19.png}}
     \caption{VGG19 ROC and Bias Score.}
     \label{vgg19_roc}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG16.png}}
     \caption{VGG16 ROC and Bias Score.}
     \label{vgg16_roc}
@@ -401,7 +450,7 @@ The availability of processing power is a significant constraint, particularly f
 % figures and tables after they are cited in the text. Use the abbreviation 
 % ``Fig.~\ref{fig}'', even at the beginning of a sentence.
 
-% \begin{table}[htbp]
+% \begin{table}[H]
 % \caption{Table Type Styles}
 % \begin{center}
 % \begin{tabular}{|c|c|c|c|}
@@ -418,7 +467,7 @@ The availability of processing power is a significant constraint, particularly f
 % \end{center}
 % \end{table}
 
-% \begin{figure}[htbp]
+% \begin{figure}[H]
 % \centerline{\includegraphics{fig1.png}}
 % \caption{Example of a figure caption.}
 % \label{fig}
