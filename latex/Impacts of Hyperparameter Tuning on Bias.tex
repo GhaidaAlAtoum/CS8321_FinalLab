@@ -52,9 +52,11 @@ The increasing application of computer vision in facial recognition technology h
 \section{Motivation}
 As advancements in computer vision increase, the application of facial recognition becomes more important. Today, a multitude of use cases impact our daily lives. Decisions involving employment, public security, criminal justice, law enforcement surveillance, airport passenger screening, and credit reporting \cite{labati2016biometric,amos2016openface} are just a few examples. The importance then, of understanding the underlying drivers of racial bias contributors is imperative to ensuring racial equity is present in them. We present several examples supporting the claim that the composition of data in many datasets are a contributing factor to racial bias. 
 
-Joy Buolamwini and Timnit Gebru in their seminal paper \textit{Gender Shades}\cite{pmlr-v81-buolamwini18a}, found that "a demographic group that is underrepresented [e.g. Black Females] in benchmark datasets can nonetheless be subjected to frequent targeting." Their study automated face recognition by law enforcement further illustrates the need for improvement. "A year-long research investigation across 100 police departments revealed that African-American individuals are more likely to be stopped by law enforcement and be subjected to face recognition searches than individuals of other ethnicities. False positives and unwarranted searches pose a threat to civil liberties. Some face recognition systems have been shown to misidentify people of color, women, and young people at high rates." Another example, Thomas Hellstrom, Virginia Dignum and Suna Bensch describes COMPAS, a computer program used for bail and sentencing decisions "has been labeled biased against black defendants\cite{hellstrom2020bias}."
+Joy Buolamwini and Timnit Gebru in their seminal paper \textit{Gender Shades}\cite{pmlr-v81-buolamwini18a}, found that "a demographic group that is underrepresented [e.g. Black Females] in benchmark datasets can nonetheless be subjected to frequent targeting." Their study of automated face recognition by law enforcement further illustrates the need for improvement. "A year-long research investigation across 100 police departments revealed that African-American individuals are more likely to be stopped by law enforcement and be subjected to face recognition searches than individuals of other ethnicities. False positives and unwarranted searches pose a threat to civil liberties."
 
-Examples of such partiality abound. Nada Hassanin quotes faculty of Law assistant professor Dr. Gideon Christian at the University of Calgary in her article \cite{Hassanin_2023}, “technology has been shown to have the capacity to replicate human bias. In some facial recognition technology, there is over 99\% accuracy rate in recognizing white male faces. But, when it comes to recognizing faces of color, especially the faces of Black women, the technology seems to manifest its highest error rate, which is about 35 per cent.”
+Another example, Thomas Hellstrom, Virginia Dignum and Suna Bensch describes COMPAS, a computer program used for bail and sentencing decisions "has been labeled biased against black defendants\cite{hellstrom2020bias}."
+
+Examples of such partiality abound. Nada Hassanin quotes faculty of Law assistant professor Dr. Gideon Christian at the University of Calgary in her article \cite{Hassanin_2023}, “In some facial recognition technology, there is over 99\% accuracy rate in recognizing white male faces. But, when it comes to recognizing faces of color, especially the faces of Black women, the technology seems to manifest its highest error rate, which is about 35 percent.”
 
 In this paper, we intend to explore methods inspired by \cite{maze2018iarpa} and conduct analysis to determine whether the effects of hyper-parameter tuning on neural network architectures could potentially decrease some of the large error rate gaps identified in most facial recognition systems. 
 
@@ -65,7 +67,7 @@ Through this investigation we seek to answer the following research questions:
     \item Does increasing the depth (number of convolutional layers) of a CNN by adding more layers affect the racial bias error rates?
 \end{enumerate}
 
-Further, we hypothesize that strategic adjustments in hyper-parameters, such as kernel size and the number of convolutional layers, can significantly influence the performance of facial recognition systems, potentially reducing racial bias.
+Further, we hypothesize that strategic adjustments in hyper-parameters, such as kernel size and the number of convolutional layers, can significantly influence the performance of facial recognition systems, potentially reducing racial bias. This hypothesis is supported by studies of the overall effect of hyper-parameters on other computer vision tasks such as, \cite{simonyan2014very} and\cite{10.1016/j.jksuci.2022.06.007}.
 
 \section{Related Work}
 
@@ -76,24 +78,26 @@ Further, we hypothesize that strategic adjustments in hyper-parameters, such as 
 \hline
 \textbf{\textit{Title}} & \textbf{\textit{Year}} & \textbf{\textit{Contribution}} \\
 \hline
-Bias in Machine Learning--What is it Good for? \cite{hellstrom2020bias} & 2020 & Describes how bias in facial recognition systems are connected and depend on each other. The authors propose a complex relation between bias occurring in the machine learning pipeline and impacts social discrimination. \\
+\textit{Vert Deep Convolutional Networks for Large-Scale Image Recognition}\cite{simonyan2014very} & 2014 & Demonstrated that representation depth is beneficial for classification accuracy on the ImageNet challenge using the ConvNet architectures. \\
 \hline
-Fairface: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation 
+\textit{Bias in Machine Learning--What is it Good for?} \cite{hellstrom2020bias} & 2020 & Describes how bias in facial recognition systems are connected and depend on each other. The authors propose a complex relation between bias occurring in the machine learning pipeline and impacts social discrimination. \\
+\hline
+\textit{Fairface: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation} 
 \cite{karkkainen2021fairface} & 2021 & Introduces the "FairFace" dataset. A novel face image dataset with 7 racial categories defined across age groups and genders designed to mitigate race bias. \\
 \hline
-Pass: Protected Attribute Suppression System for Mitigating Bias in Face Recognition\cite{dhar2021pass} & 2021 & Introduces a quantitative metric for measuring the trade-ff between bias reduction and drop in verification performance called the Bias Performance Coefficient (BPC) \\
+\textit{Pass: Protected Attribute Suppression System for Mitigating Bias in Face Recognition}\cite{dhar2021pass} & 2021 & Introduces a quantitative metric for measuring the trade-ff between bias reduction and drop in verification performance called the Bias Performance Coefficient (BPC). \\
 \hline
-Measuring Hidden Bias Within Face Recognition Via Racial Phenotypes \cite{yucer2022measuring} & 2022 & Introduces an alternative racial bias analysis methodology via facial phenotype attributes for face recognition rather than race categorization labels.  \\
+\textit{Measuring Hidden Bias Within Face Recognition Via Racial Phenotypes} \cite{yucer2022measuring} & 2022 & Introduces an alternative racial bias analysis methodology via facial phenotype attributes for face recognition rather than race categorization labels.  \\
 \hline
-Distill and De-bias: Mitigating Bias in Face Verification using Knowledge Distillation\cite{dhar2022distill} & 2022 & Proposes a novel distillation-based approach to enforce a network to attend to similar face regions, irrespective of the attribute category and illustrates it through the use of GradCAM. \\
+\textit{Distill and De-bias: Mitigating Bias in Face Verification using Knowledge Distillation}\cite{dhar2022distill} & 2022 & Proposes a novel distillation-based approach to enforce a network to attend to similar face regions, irrespective of the attribute category and illustrates it through the use of GradCAM. \\
 \hline
-Racial Bias Within Face Recognition: A survey \cite{yucer2023racial} & 2023 & Surveys the state of facial recognition bias and methods to combat it through the review of various papers in the field. \\
+\textit{Racial Bias Within Face Recognition: A survey} \cite{yucer2023racial} & 2023 & Surveys the state of facial recognition bias and methods to combat it through the review of various papers in the field. \\
 \hline
 \end{tabular}
 \label{tab1}
 \end{table*}
 
-\cite{yucer2023racial} Surveys all papers written until May of 2023 regarding racial bias within face recognition and efforts to mitigate it at each stage of the pipeline. Various means exist by which bias enters facial recognition models. Acquisition, the stages of initial image pre-processing and formulation from online resources which could introduce sampling bias; Face Localization, a facial alignment step to correct for positional, rotational, and scale variations of obtaining a canonical facial image representation which could be affected by pose bias; Face Representation, the process of optimizing a model to embed images into a feature embedding space and could introduce hyper-parameter bias and uncertainty bias; Face Verification, which includes one-to-one matching to determine whether two images belong to the same individual; and Face Identification, the one-to-many matching operation to identify an individual against  a set of reference images, both of which may introduce evaluation bias when the dataset used to evaluate is not accurately representative of the target population \cite{suresh2021framework}.
+\cite{yucer2023racial} Surveys multiple papers written until May of 2023 regarding racial bias within face recognition and efforts to mitigate it at each stage of the pipeline. Various means exist by which bias enters facial recognition models. Acquisition, the stages of initial image pre-processing and formulation from online resources which could introduce sampling bias; Face Localization, a facial alignment step to correct for positional, rotational, and scale variations of obtaining a canonical facial image representation which could be affected by pose bias; Face Representation, the process of optimizing a model to embed images into a feature embedding space and could introduce hyper-parameter bias and uncertainty bias; Face Verification, which includes one-to-one matching to determine whether two images belong to the same individual; and Face Identification, the one-to-many matching operation to identify an individual against  a set of reference images, both of which may introduce evaluation bias when the dataset used to evaluate is not accurately representative of the target population \cite{suresh2021framework}.
 
 Buolamwini and Gebru present the evaluation of three commercially available gender classification systems from Microsoft, IBM, and Face++ in\cite{pmlr-v81-buolamwini18a} and finds that darker-skinned females are the most misclassified group. Error rates among darker-skinned females reached a maximum of 34.7\% while similar rates for lighter-skinned males was 0.8\%. The authors developed a custom face image dataset called Pilot Parliamentary Benchmark (PPB) composed of images of members of parliament from three African countries and three European countries. They introduce the first intersectional demographic and phenotypic evaluation of face-based gender classification accuracy using the Fitzpatrick skin types\cite{fitzpatrick1988validity}, to their knowledge the first gender classification benchmark to do so. 
 
@@ -101,38 +105,30 @@ Concepts that comprise good facial recognition datasets are introduced in \cite{
 
 In \cite{dhar2021pass} the authors introduce a new metric called Bias Performance Coefficient (BPC) that measures the trade-off between bias reduction and drop in verification performance. The PASS framework achieves better BPC values than existing baselines. Additionally, they introduce a method to quantitatively describe gender and skin tone bias in the context of face verification. They define gender and skin tone bias at a given false positive rate (FPR). We will use these metrics as our baseline evaluation criteria to assess the impact of hyper-parameter tuning.
 
-Many solutions have been introduced to help in mitigating racial bias in face recognition such as ArcFace Loss Function \cite{deng2019arcface}, Distill and De-bias architecture \cite{dhar2022distill}, and many more. However, machine learning algorithms, particularly within deep learning, contain a large number of hyper-parameters that are not learned during training but are chosen by the user. These hyper-parameters include the number of layers, kernel size, learning rate, and number of epochs \cite{hellstrom2020bias}. One question that has not been explored is understanding the effect of human selected hyper-parameters on face recognition racial bias.
+Many solutions have been introduced to help in mitigating racial bias in face recognition such as ArcFace Loss Function\cite{deng2019arcface}, Distill and De-bias architecture \cite{dhar2022distill}, and the PASS framework\cite{dhar2021pass} which claims to achieve better BPC values than existing baselines. However, machine learning algorithms, particularly within deep learning, contain a large number of hyper-parameters that are not learned during training but are chosen by the user. These hyper-parameters include the number of layers, kernel size, learning rate, and number of epochs\cite{hellstrom2020bias}. Karen Simonyan and Andrew Zisserman \cite{simonyan2014very} explore the impact depth and kernel sizes have on the accuracy in large-scale image recognition networks.
 
-We cite a timeline of papers in Table 1 that have investigated, evaluated and reviewed racial bias in facial recognition systems in table one. Of note is the absence of study directly related to the impact of hyper-parameter variation.
+We cite a timeline of papers in Table I that have investigated, evaluated and reviewed racial bias in facial recognition systems in table one. Of note is the absence of study directly related to the impact of hyper-parameter variation on racial bias.
 
 \section{Methods}
 \subsection{Network Architecture}
-We will explore a neural network that’s inspired by architectural design of VGG models. However, it’s important to note that we will not strictly adhere to the original hyper-parameters of the VGG architectures. Our focus will be investigating the effects of varying kernel sizes and number of convolution layers.
+We will explore a neural network that’s inspired by architectural design of VGG models. However, it’s important to note that we will not strictly adhere to the original hyper-parameters of the VGG architectures. Our focus will be investigating the effects of varying kernel sizes and number of convolution layers. A performance comparison will be made on the implication of using smaller kernel size (3x3) versus larger kernel (5x5). We will further examine the impact of the network depth by training models with different numbers of layers, specifically 4, 8, and 16 layers.
 
-The hyper-parameters we intend to study are:
-
-\begin{table}[!ht]
-\centering
-\caption{Test Matrix}
-\label{tab:test_matrix}
-\begin{tabular}{c|p{3.5cm}|p{3.5cm}|}
-\cline{2-3}
- & \textbf{Kernel (3x3)} & \textbf{Kernel (5x5)} \\
-\hline
-\rotatebox[origin=c]{90}{\parbox{1cm}{\centering \textbf{8 Conv. Layers}}} &  &  \\
-& Total params: 434,839,848 Trainable params: 434,839,848 & Total params: 440,017,1927 trainable params: 440,017,192 \\
-\hline
-\rotatebox[origin=c]{90}{\parbox{1.1cm}{\centering \textbf{16 Conv. Layers}}} &  &  \\
-& Total params: 61,550,888 Trainable params: 61,550,888 & Total params: 100,282,664 Trainable params: 100,282,664 \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsubsection{Kernel Sizes}
-We will compare the performance implication of using smaller kernel size (3x3) versus larger kernel (5x5).
-
-\subsubsection{Number of Convolutional Layers} 
-We will examine the impact of the network depth by training models with different numbers of layers, specifically 4, 8 and 16 layers. 
+% \begin{table}[!ht]
+% \centering
+% \caption{Test Matrix}
+% \label{tab:test_matrix}
+% \begin{tabular}{c|p{3.5cm}|p{3.5cm}|}
+% \cline{2-3}
+%  & \textbf{Kernel (3x3)} & \textbf{Kernel (5x5)} \\
+% \hline
+% \rotatebox[origin=c]{90}{\parbox{1cm}{\centering \textbf{8 Conv. Layers}}} &  &  \\
+% & Total params: 434,839,848 Trainable params: 434,839,848 & Total params: 440,017,1927 trainable params: 440,017,192 \\
+% \hline
+% \rotatebox[origin=c]{90}{\parbox{1.1cm}{\centering \textbf{16 Conv. Layers}}} &  &  \\
+% & Total params: 61,550,888 Trainable params: 61,550,888 & Total params: 100,282,664 Trainable params: 100,282,664 \\
+% \hline
+% \end{tabular}
+% \end{table}
 
 We maintain rigorous control over the experimental conditions by training and testing each model configuration on an identical dataset for each configuration, applying a consistent loss function, and standardizing computational settings. This uniformity ensures that any observed differences in performance can be attributed to our variables of interest. Additionally, we control for other potential sources of variation by fixing independent parameters, such as learning rate and number of epochs, selecting their optimal values. Our primary focus remains on the manipulable dependent variables, which are kernel size and depth of the network layers.
 
@@ -175,21 +171,21 @@ Now that we have 116 matching pairs for ‘Light’ and 116 matching pairs for �
 
 \begin{figure}[hbt!]
     \centering
-    \includegraphics[height=0.5\linewidth]{latex/images/DistributionOfNumberOfImages.png}
+    \includegraphics[height=0.8\linewidth]{latex/images/DistributionOfNumberOfImages.png}
     \caption{Number of images per identity}
     \label{num_img_per_identity}
 \end{figure}
 
 \begin{figure}[hbt!]\captionsetup[subfigure]{font=footnotesize}
   \centering
-  \begin{minipage}{.4\columnwidth}
+  \begin{minipage}{.5\columnwidth}
     \centering
     \includegraphics[width=\linewidth]{latex/images/NonUniformNumberOfPairings.png}
     \caption{Number of pairs}
     \label{num_pairings}
   \end{minipage}%
   \hfill
-  \begin{minipage}{.4\columnwidth}
+  \begin{minipage}{.5\columnwidth}
     \centering
     \includegraphics[width=\linewidth]{latex/images/UniformNumberOfPairings.png}
     \caption{Undersampled number of pairs}
@@ -240,11 +236,10 @@ The ROC Curve plots the True positive rate (TPR) against the False Positive rate
   \end{minipage}%
 \end{figure}
 
-\subsubsection{Bias/Performance trade-off}
-Though we will not inherently be focusing on model performance, we will leverage this measurement to track the side effects of our hyper-parameters tuning.
-This is the trade-off between bias reduction and facial verification performance, where a higher BPC means, bias reduction but low face verification drop while a lower BPC means the opposite (bias reduction with high facial verification performance reduction).
+\subsubsection{Bias/Performance trade-off (BPC)}
+Though we will not inherently be focusing on model performance, we will leverage this measurement to track the side effects of our hyper-parameters tuning. BPC is the trade-off between bias reduction and facial verification performance. A higher BPC indicates bias reduction and a low drop in face verification performance, while a lower BPC signifies bias reduction with a significant reduction in facial verification performance.
 
-Utilizing Bias-Performance Characteristic (BPC) as an evaluation metric allows us to finely balance the trade-offs between reducing bias and maintaining high verification performance in facial recognition systems. This metric is crucial for our analysis as it ensures that while we aim to study the effect of their hyper-parameters tuning on bias, we do not inadvertently compromise the system's overall effectiveness. It guides our tuning process by quantifying the impact of changes on both bias reduction and facial recognition accuracy, enabling informed study on the achieved results.
+Utilizing BPC as an evaluation metric allows us to finely balance the trade-offs between reducing bias and maintaining high verification performance in facial recognition systems. This metric is crucial for our analysis as it ensures that while we aim to study the effect of their hyper-parameters tuning on bias, we do not inadvertently compromise the system's overall effectiveness. It guides our tuning process by quantifying the impact of changes on both bias reduction and facial recognition accuracy, enabling informed study on the achieved results.
 
 \begin{equation}
     {BPC^{(F)}=\frac{Bias^{(F)}-Bias_{deb}^{(F)}}{Bias^{(F)}}}
@@ -261,7 +256,7 @@ Furthermore, monitoring accuracy can help identify if the model is over-fitting 
 For the purpose of model training, we will be utilizing the FairFace Dataset\cite{karkkainen2021fairface}. This dataset contains 108,501 images and is balanced on race. Seven races are defined White, Black, Indian, East Asian, Southeast Asian, Middle East, and Latino. Images were collected from the YFCC-100M Flickr dataset\cite{thomee2016yfcc100m}.
 
 \begin{figure}[hbt!]
-    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/fairFaceOriginalDistribution.png}}
+    \centerline{\includegraphics[width=0.5\linewidth]{latex/images/fairFaceOriginalDistribution.png}}
     \caption{Distribution of races in the FairFace training dataset.}
     \label{racial_distribution}
 \end{figure}
@@ -270,7 +265,7 @@ For the purpose of model training, we will be utilizing the FairFace Dataset\cit
 For ease of calculations and testing, we opted to follow in similar steps to\cite{dhar2022distill} in which we combine and binarize the dataset. Regrouping the FairFace\cite{karkkainen2021fairface} data set into two skin tone categories Light (‘White’ $\cup$ ‘East Asian’) and Dark (‘Indian’ $\cup$ ‘Black’). As \cite{dhar2022distill} mentions the skin label is not perfectly correlated with race, but it does have a high correlation nonetheless. 
 
 \begin{figure}[hbt!]
-    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/RegroupDistributionFairFace.png}}
+    \centerline{\includegraphics[width=0.5\linewidth]{latex/images/RegroupDistributionFairFace.png}}
     \caption{Dataset distribution after data binarization.}
     \label{binarized_data}
 \end{figure}
@@ -278,50 +273,83 @@ For ease of calculations and testing, we opted to follow in similar steps to\cit
 The training data has 28,814 instances of ‘light’ and 24,552 of ‘dark’, which means we have an imbalance in our dataset. We will utilize random under-sampling to delete instances from the majority class ‘light’. For our study 24,552 instances per class should be sufficient to study the effect of hyper parameters on bias.
 
 \section{Results and Conclusion}
-\subsection{Results}
-Kernel size increase description...
-....
+\subsection{Effect of Kernel Size Increase}
+Kernel size is a critical hyper-parameter in CNN, determining the area of the input data over which the convolutional operations are applied. Kernel size influences computational efficiency, feature resolution and processing of spatial hierarchies.\cite{simonyan2014very}, Smaller kernels generally preserve higher resolution on moderately sized inputs given that they cover less areas per convolution, leading it to capture fine-grains of each area, whereas larger kernels capture more spatial area but can compromise resolution due to their broader coverage which may overlook subtle details and accelerate spatial dimension reduction. From an efficiency perspective, smaller kernel sizes might require more layers to capture the depth of features, but they do so with significantly reduced parameter count compared to larger kernels in shallower networks. \cite{simonyan2014very} . These considerations guided our selection of kernel size for bias reduction experiment, given the moderate size of our images, and our computation resource constraints, we opted to start with 3x3 kernels to compare their effects on biases  relative to larger kernels.
+\begin{table}[!hb]
+\renewcommand{\arraystretch}{1.3}
+\caption{Experimental Results}
+\label{tab:experimental_results}
+\centering
+\begin{tabular}{cccc}
+\toprule
+\textbf{Layers} & \textbf{Kernel Size} & \textbf{Configuration} & \textbf{Accuracy} \\
+\midrule
+4 & 3x3 & (4\_3) & 0.137931 \\
+4 & 5x5 & (4\_5) & 0.120689 \\
+8 & 3x3 & (8\_3) & 0.103448 \\
+8 & 5x5 & (8\_5) & 0.172413 \\
+10 & 3x3 & (10\_3) & 0.017241 \\
+10 & 5x5 & (10\_5) & 0.051724 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{figure}[hbt!]\captionsetup[subfigure]{font=footnotesize}
-  \centering
-  \begin{minipage}{.45\columnwidth}
-    \centering
-    \includegraphics[width=\linewidth]{latex/images/4Layers_3Kernel_4Layers_5Kernel.png}
+
+Our analysis revealed that kernel size does have an impact on the bias reduction, particularly smaller kernel sizes generally perform better in terms of bias mitigation. Although the transition from 4 layers and 3x3 kernel size to 4 layers and 5x5 kernel size showed a decrease in bias score, possibly due to insufficient spatial receptibility in shallow layers, the trend became clear and consistent with prior research findings in deeper configurations (8 and 10 layers)\cite{simonyan2014very}. Models with larger 5x5 kernels displayed higher biases compared to their 3x3 counterparts, suggesting that while they capture broader spatial information, they might also amplify biases present in the dataset more significantly.
+This study confirms that the kernel size has a high effect on bias, especially, smaller size affects bias mitigations extensively while maintaining computational efficiencies and feature resolution.
+
+
+\begin{figure}[hbt!]
+   \centering
+    \includegraphics[width=0.7\linewidth]{latex/images/4Layers_3Kernel_4Layers_5Kernel.png}
     \caption{ROC curves for 4 Convolution Layers and increasing Kernel Size }
     \label{4Layers_3Kernel_4Layers_5Kernel}
-  \end{minipage}%
-  \hfill
-  \begin{minipage}{.45\columnwidth}
-     \centering
-    \includegraphics[width=\linewidth]{latex/images/8Layers_3Kernel_8Layers_5Kernel.png}
+    \centering
+    \includegraphics[width=0.7\linewidth]{latex/images/8Layers_3Kernel_8Layers_5Kernel.png}
     \caption{ROC curves for 8 Convolution Layers and increasing Kernel Size }
-    \label{4Layers_3Kernel_4Layers_5Kernel}
-  \end{minipage}%
+    \label{8Layers_3Kernel_8Layers_5Kernel}
+    \centering
+    \includegraphics[width=0.7\linewidth]{latex/images/10Layers_3Kernel_10Layers_5Kernel.png}
+    \caption{ROC curves for 10 Convolution Layers and increasing Kernel Size }
+    \label{10Layers_3Kernel_10Layers_5Kernel}
 \end{figure}
 
+From Table III we note that increasing the kernel size results in small BPC which is desired, which means we affected the bias with low affect on the model performance.
+\begin{table}[!hb]
+\renewcommand{\arraystretch}{1.3}
+\caption{BPC Score going from 3x3 kernel to 5x5 kernel}
+\label{tab:bpc_scores}
+\centering
+\begin{tabular}{cc}
+\toprule
+\textbf{Layers} & \textbf{BPC Score} \\
+\midrule
+4 & 0.125 \\
+8 & -0.667 \\
+10 & -2.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Layer count increase description...
-
-
-Analysis and Observations:
+\subsection{Effect of Convolutional Layer Addition}
 Increasing the number of layers in a deep CNN has been shown to decrease value error percentage\cite{simonyan2014very}. 
 In our investigation the Bias Score with a fixed kernel size of 3x3 decreased from four to eight to ten layers respectively.
 
-\begin{figure}[hbt!]
+\begin{figure}[!t]
     \centerline{\includegraphics[width=1.05\linewidth]{latex/images/4Layers_3Kernel_8Layers_3Kernel_10Layers_3Kernel.png}}
     \caption{ROC curves for 3x3 kernel size and increasing layers.}
     \label{binarized_data}
 \end{figure}
 
-However, with a fixed kernel size of 5x5, and the same layer configuration, we observed an increase in the bias score between four and eight layers, and a significant decrease when the number of layers was increased from eight to ten. Generally, all results with a 5x5 kernel had worse bias scores at the same layer configurations as their 3x3 counterparts which aligns with the findings in kernel size comparisons previously noted.
+However, with a fixed kernel size of 5x5, and the same layer configuration, we observed an increase in the bias score between 4 and 8 layers, and a significant decrease when the number of layers was increased from eight to 10. Generally, all results with a 5x5 kernel had worse bias scores at the same layer configurations as their 3x3 counterparts which aligns with the findings in kernel size comparisons previously noted.
 
-\begin{figure}[hbt!]
+\begin{figure}[!t]
     \centerline{\includegraphics[width=1\linewidth]{latex/images/4Layers_5Kernel_8Layers_5Kernel_10Layers_5Kernel.png}}
     \caption{ROC curves for 5x5 kernel size and increasing layers.}
     \label{binarized_data}
 \end{figure}
 
-From this analysis we can address our research question – “Does increasing the depth (number of layers) of a CNN by adding more layers affect the racial bias error rates?”
+\textbf{From this analysis we can address our research question – “Does increasing the depth (number of layers) of a CNN by adding more layers affect the racial bias error rates?”}
 Our analysis of increasing the number of layers, with a fixed kernel size, indicates that if the kernel size is small (e.g. 3x3 filter size, as opposed to a larger 5x5 filter size), the level of Bias seems to decrease steadily as layers are increased.
 
 \begin{figure}[hbt!]
@@ -329,6 +357,24 @@ Our analysis of increasing the number of layers, with a fixed kernel size, indic
     \caption{Bias score change with an increase in convolutional layers.}
     \label{binarized_data}
 \end{figure}
+
+Transitioning from 4 to 8 layers regardless of kernel size seems to have lower BPC scores compared to transitioning from 8 layers to 10 layers. This means in our move from 8layer to 10 layers we definitely did enhance the Bias however it reduced the model accuracy. Note, this could be due to poor training, or need of varying training technique. 
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{BPC Score going from 4 Layers to 8 Layers and 8 Layers to 10 Layers with Different Kernel Sizes}
+\label{tab:bpc_scores}
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Kernel Size} & \textbf{4 Layers to 8 Layers} & \textbf{8 Layers to 10 Layers} \\
+\midrule
+3x3 & 0.25 & 0.83 \\
+5x5 & -0.43 & 0.70 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Conclusions}
 
 \subsection{Limitations}
 \subsubsection{Restricted Variation Study}
