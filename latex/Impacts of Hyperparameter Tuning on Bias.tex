@@ -238,16 +238,21 @@ Where $(TPR_{class1}^{(F)}, TPR_{class1}^{(F)})$ denote the true positive rates 
 \subsubsection{ROC Curve}
 The ROC Curve plots the True positive rate (TPR) against the False Positive rate (FPR) at various classification thresholds. The curve should help us select the optimal threshold for classification purposes. The curve also helps in visualizing the  quality of our model. 
 
-\begin{figure}[H]
-    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG19.png}}
-    \caption{VGG19 ROC and Bias Score.}
-    \label{vgg19_roc}
-\end{figure}
-
-\begin{figure}[H]
-    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/VGG16.png}}
-    \caption{VGG16 ROC and Bias Score.}
-    \label{vgg16_roc}
+\begin{figure}[hbt!]\captionsetup[subfigure]{font=footnotesize}
+  \centering
+  \begin{minipage}{.45\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{code/compiling_results/output_images/4Layers_3Kernel.png}
+    \caption{4 Layers with $3x3$ Kernel size - ROC and Bias Score.}
+    \label{10layers_3_roc}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}{.45\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{code/compiling_results/output_images/10Layers_3Kernel.png}
+    \caption{10 Layers with $3x3$ Kernel size - ROC and Bias Score.}
+    \label{4layers_3_roc}
+  \end{minipage}%
 \end{figure}
 
 \subsubsection{Bias/Performance trade-off}
@@ -269,7 +274,7 @@ Furthermore, monitoring accuracy can help identify if the model is over-fitting 
 \subsubsection{Visualization}
 We used Grad-CAM (Gradient-weighted Class Activation Mapping) heat map visualization to visualize the region of an image that are important for predictions from the last layer of CNN. This help us to understand which facial features the model is focusing on for face identification or verification. This is relevant for our analysis of bias as it can reveal if the model is relying on features that are not evenly distributed across different demographic(racial) groups, potentially leading to bias prediction.
 
-\begin{figure}
+\begin{figure}[hbt!]
     \centerline{\includegraphics[width=0.8\linewidth]{latex/images/heatmap.png}}
     \caption{Grad-CAM heat maps of prediction focus regions.}
     \label{grad_cam}
@@ -279,7 +284,7 @@ We used Grad-CAM (Gradient-weighted Class Activation Mapping) heat map visualiza
 \subsubsection{Training Dataset}
 For the purpose of model training, we will be utilizing the FairFace Dataset\cite{karkkainen2021fairface}. This dataset contains 108,501 images and is balanced on race. Seven races are defined White, Black, Indian, East Asian, Southeast Asian, Middle East, and Latino. Images were collected from the YFCC-100M Flickr dataset\cite{thomee2016yfcc100m}.
 
-\begin{figure}
+\begin{figure}[hbt!]
     \centerline{\includegraphics[width=0.8\linewidth]{latex/images/fairFaceOriginalDistribution.png}}
     \caption{Distribution of races in the FairFace training dataset.}
     \label{racial_distribution}
@@ -288,7 +293,7 @@ For the purpose of model training, we will be utilizing the FairFace Dataset\cit
 \subsubsection{Binarization / Regrouping of the training dataset}
 For ease of calculations and testing, we opted to follow in similar steps to\cite{dhar2022distill} in which we combine and binarize the dataset. Regrouping the FairFace\cite{karkkainen2021fairface} data set into two skin tone categories Light (‘White’ $\cup$ ‘East Asian’) and Dark (‘Indian’ $\cup$ ‘Black’). As \cite{dhar2022distill} mentions the skin label is not perfectly correlated with race, but it does have a high correlation nonetheless. 
 
-\begin{figure}
+\begin{figure}[hbt!]
     \centerline{\includegraphics[width=0.8\linewidth]{latex/images/RegroupDistributionFairFace.png}}
     \caption{Dataset distribution after data binarization.}
     \label{binarized_data}
@@ -297,6 +302,37 @@ For ease of calculations and testing, we opted to follow in similar steps to\cit
 The training data has 28,814 instances of ‘light’ and 24,552 of ‘dark’, which means we have an imbalance in our dataset. We will utilize random under-sampling to delete instances from the majority class ‘light’. For our study 24,552 instances per class should be sufficient to study the effect of hyper parameters on bias.
 
 \section{Results and Conclusion}
+\subsection{Results}
+Kernel size increase description...
+
+Layer count increase description...
+Analysis and Observations:
+Increasing the number of layers in a Deep CNN has been shown to decrease value error percentage\cite{simonyan2014very}. 
+In our investigation the Bias Score with a fixed size kernel of 3x3 decreased from four to eight to ten layers respectively.
+
+\begin{figure*}[hbt!]
+    \centerline{\includegraphics[width=0.8\linewidth]{latex/images/VGG19_VGG16_ResNet50.png}}
+    \caption{ROC curves for 3x3 kernel size and increasing layers.}
+    \label{binarized_data}
+\end{figure*}
+
+However, with a fixed kernel size of 5x5, and the same layer configuration, we observed an increase in the bias score between four and eight layers, and a significant decrease when number of layers was increased from eight to ten.
+
+\begin{figure}[hbt!]
+    \centerline{\includegraphics[width=1\linewidth]{latex/images/VGG19_VGG16_ResNet50.png}}
+    \caption{ROC curves for 5x5 kernel size and increasing layers.}
+    \label{binarized_data}
+\end{figure}
+
+From this analysis we can address our research question – “Does increasing the depth (number of layers) of a CNN by adding more layers affect the racial bias error rates?”
+Our analysis of increasing the number of layers, with a fixed kernel size, seems to indicate that if the kernel size is small (e.g. 3x3 filter size, as opposed to a larger 5x5 filter size), the level of Bias seems to decrease steadily as layers are increased.
+
+\begin{figure}[hbt!]
+    \centerline{\includegraphics[width=0.9\linewidth]{latex/images/bpc_change_combo.png}}
+    \caption{BPC Change with an increase in convolutional layers.}
+    \label{binarized_data}
+\end{figure}
+
 \subsection{Limitations}
 \subsubsection{Restricted Variation Study}
 Our research primarily focuses on a limited subset of hyper-parameters, due to the complexity and extensive computational resources required for a broader analysis. By concentrating on key hyper-parameters, we aim to provide depth rather than breadth in our investigation. This strategic limitation allows for detailed exploration within the selected parameters but restricts our ability to generalize findings across a wider range of hyper-parameter configurations.
@@ -306,7 +342,7 @@ The decision to binarize racial categories into 'light' and 'dark' groups is dri
 The timeline of the research project has necessitated certain compromises in terms of the breadth and depth of the investigation. Extensive hyper-parameter tuning and larger-scale testing methodologies were curtailed to meet project deadlines. As a result, some potentially influential factors and interactions may not have been thoroughly explored.
 \subsubsection{Computational Resource Limitations}
 The availability of processing power is a significant constraint, particularly for deep learning models that require substantial computational resources. This limitation influenced our choice of models and the extent of hyper-parameter tuning feasible within our study, potentially restricting the robustness and variability of our experiments.
-\subsection{Results}
+
 
 
 
