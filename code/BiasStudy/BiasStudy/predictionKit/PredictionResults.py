@@ -30,11 +30,14 @@ class PredictionResults(object):
     def get_bias_str(self) -> dict:
         result = []
         for key, value in self.bias_score_dict.items():
-            result.append("{} Bias: {}".format(key, value[bias_score]))
+            result.append("{} Bias: {}".format(key, value))
         return "\n".join(result)
 
     def get_base_bias_score(self) -> float:
         return self.bias_score_dict["base_fpr"]["bias_score"]
+    
+    def get_base_threshold(self) -> float:
+        return 1e-1
     
     def get_model_name(self) -> str:
         return self.model_name
@@ -172,9 +175,10 @@ class PredictionResults(object):
             "bias_score": abs(tpr_variation0_at_overall_fpr - tpr_variation1_at_overall_fpr)
         }
         
+        base_fpr_threshold = self.get_base_threshold()
         bias_score_dict["base_fpr"] = {
-            "fpr": 1e-1,
-            "bias_score": abs(variation_0_interp(1e-1) - variation_1_interp(1e-1))
+            "fpr": base_fpr_threshold,
+            "bias_score": abs(variation_0_interp(base_fpr_threshold) - variation_1_interp(base_fpr_threshold))
         }
         
         return bias_score_dict

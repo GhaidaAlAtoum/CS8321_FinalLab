@@ -43,6 +43,7 @@ def plot_roc(prediction_result: PredictionResults, fig_size: (int,int) = (5,5), 
         ax = plt.gca()
 
     ax.plot([0, 1], [0, 1], linestyle='--', label='No Skill')
+    ax.axvline(prediction_result.get_base_threshold(), ymin=0.05, ymax=0.95, linestyle='--', label='Base Threshold {}'.format(prediction_result.get_base_threshold()), color = 'b')
     
     ax.plot(
         variation_0_metrics.get_fpr(),
